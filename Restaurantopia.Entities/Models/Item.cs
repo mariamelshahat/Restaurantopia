@@ -23,13 +23,9 @@ namespace Restaurantopia.Entities.Models
 		public string ItemStatus { get; set; }
 		[StringLength ( 100 )]
 
-		// Navigation property to Category
 		[ForeignKey ( "Category" )]
-		// Foreign key to Category
 		public int CategoryId { get; set; }
-		public Category Category { get; set; } // Many-to-One relationship with Category
-
-		// Navigation property to OrderDetails
-		public ICollection<OrderDetails> OrderDetails { get; set; } // One-to-Many relationship with OrderDetails
+		public Category Category { get; set; } 
+		public ICollection<OrderDetails> OrderDetails { get; set; }
 	}
 }

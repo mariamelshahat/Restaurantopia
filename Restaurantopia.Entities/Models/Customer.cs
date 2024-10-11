@@ -21,8 +21,7 @@ namespace Restaurantopia.Entities.Models
 		public string PhoneNumber { get; set; }
 		[StringLength ( 150 )]
 		public string Address { get; set; }
-		// Navigation property to Orders
-		public ICollection<Order> Orders { get; set; } // One-to-Many relationship with Orders
+		public ICollection<Order> Orders { get; set; }
 
 	}
 }

@@ -13,16 +13,13 @@ namespace Restaurantopia.Entities.Models
 		public int Total { get; set; }
 		public string Payment { get; set; }
 		public string Status { get; set; }
-		// Navigation property to Order
-		[ForeignKey ( "Order" )]
-		// Foreign key to Order
-		public int OrderId { get; set; }
-		public Order Order { get; set; } // Many-to-One relationship with Order
 
-		// Navigation property to Item
+		[ForeignKey ( "Order" )]	
+		public int OrderId { get; set; }
+		public Order Order { get; set; }
+
 		[ForeignKey ( "Item" )]
-		// Foreign key to Item
 		public int ItemId { get; set; }
-		public Item Item { get; set; } // Many-to-One relationship with Item
+		public Item Item { get; set; }
 	}
 }

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Restaurantopia.InterFaces;
 using Restaurantopia.Models;
+using Restaurantopia.Repositories;
 
 namespace Restaurantopia
 {
@@ -8,18 +10,16 @@ namespace Restaurantopia
 		public static void Main ( string[] args )
 		{
 			var builder = WebApplication.CreateBuilder ( args );
-
-			// Add services to the container.
+			
 			builder.Services.AddControllersWithViews ();
             builder.Services.AddDbContext<MyDbContext>(Opt => Opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
-
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             var app = builder.Build ();
 
-			// Configure the HTTP request pipeline.
+			
 			if (!app.Environment.IsDevelopment ())
 			{
 				app.UseExceptionHandler ( "/Home/Error" );
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts ();
 			}
 

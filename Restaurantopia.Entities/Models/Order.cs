@@ -16,14 +16,12 @@ namespace Restaurantopia.Entities.Models
 
 		public int Customer_Id { get; set; }
 
-		public Review Review { get; set; } //(1->1)
+		public Review Review { get; set; }
 
-		// Navigation property to Customer
-		[ForeignKey ( "Customer" )] // Many-to-One
+		[ForeignKey ( "Customer" )]
 		public int CustomerId { get; set; }
 		public Customer Customer { get; set; }
-		// Navigation property to the associated OrderDetail
-		public OrderDetails OrderDetail { get; set; } // One-to-One relationship
+		public OrderDetails OrderDetail { get; set; }
 
 	}
 }

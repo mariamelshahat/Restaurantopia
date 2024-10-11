@@ -13,8 +13,6 @@ namespace Restaurantopia.Entities.Models
 		public int Id { get; set; }
 		[StringLength ( 50 )]
 		public string CategoryName { get; set; }
-
-		// Navigation property to Items
-		public ICollection<Item> Items { get; set; } // One-to-Many relationship with Items
+		public ICollection<Item> Items { get; set; }
 	}
 }
