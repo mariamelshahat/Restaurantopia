@@ -34,10 +34,10 @@ namespace Restaurantopia.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(Item item)
         {
             try
-            {
+            {               
                 return RedirectToAction(nameof(Index));
             }
             catch
