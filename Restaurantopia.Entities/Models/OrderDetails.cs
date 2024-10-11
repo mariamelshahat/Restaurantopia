@@ -9,17 +9,14 @@ namespace Restaurantopia.Entities.Models
 {
 	public class OrderDetails
 	{
-		public int Id { get; set; }
-		public int Total { get; set; }
-		public string Payment { get; set; }
-		public string Status { get; set; }
+        public int Id { get; set; }
+        public int Total { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
+        [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
 
-		[ForeignKey ( "Order" )]	
-		public int OrderId { get; set; }
-		public Order Order { get; set; }
-
-		[ForeignKey ( "Item" )]
-		public int ItemId { get; set; }
-		public Item Item { get; set; }
-	}
+        [NotMapped]
+        public List<Item> itemList { get; set; }
+    }
 }

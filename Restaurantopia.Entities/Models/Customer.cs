@@ -21,7 +21,7 @@ namespace Restaurantopia.Entities.Models
 		public string PhoneNumber { get; set; }
 		[StringLength ( 150 )]
 		public string Address { get; set; }
-		public ICollection<Order> Orders { get; set; }
+		public ICollection<OrderDetails> Orders { get; set; }
 
 	}
 }
