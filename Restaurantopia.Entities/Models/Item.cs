@@ -29,12 +29,6 @@ namespace Restaurantopia.Entities.Models
 		public int CategoryId { get; set; }
 		public Category Category { get; set; } // Many-to-One relationship with Category
 
-		// Navigation property to Menu
-		[ForeignKey ( "Menu" )]
-		// Foreign key to Menu
-		public int MenuId { get; set; } // Foreign key referencing Menu
-		public Menu Menu { get; set; } // Many-to-One relationship with Menu
-
 		// Navigation property to OrderDetails
 		public ICollection<OrderDetails> OrderDetails { get; set; } // One-to-Many relationship with OrderDetails
 	}

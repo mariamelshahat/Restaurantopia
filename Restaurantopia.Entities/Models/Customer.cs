@@ -23,8 +23,6 @@ namespace Restaurantopia.Entities.Models
 		public string Address { get; set; }
 		// Navigation property to Orders
 		public ICollection<Order> Orders { get; set; } // One-to-Many relationship with Orders
-													   // Navigation property to Reservation
-		public ICollection<Reservation> Reservations { get; set; } // One-to-Many relationship with Reservation
 
 	}
 }

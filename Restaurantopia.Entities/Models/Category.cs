@@ -11,9 +11,10 @@ namespace Restaurantopia.Entities.Models
 	{
 		[Key]
 		public int Id { get; set; }
+		[StringLength ( 50 )]
 		public string CategoryName { get; set; }
-		public string CategoryDescription { get; set; }
-		// Navigation property to list of items in this category
-		public ICollection<Item> Items { get; set; } // One-to-Many relationship with Item
+
+		// Navigation property to Items
+		public ICollection<Item> Items { get; set; } // One-to-Many relationship with Items
 	}
 }
