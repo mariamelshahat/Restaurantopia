@@ -20,15 +20,15 @@ namespace Restaurantopia.Controllers
             return View(Items);
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            
-            return View();
+            Item item = await _repository.GetByIdAsync(id);
+            return View(item);
         }
 
 
         public async Task<ActionResult> Create()
-        {           
+        {
             return View();
         }
 
@@ -37,8 +37,9 @@ namespace Restaurantopia.Controllers
         public async Task<ActionResult> Create(Item item)
         {
             try
-            {               
-                return RedirectToAction(nameof(Index));
+            {
+                await _repository.AddAsync(item);
+                return RedirectToAction(nameof(ListOfItems));
             }
             catch
             {
@@ -46,46 +47,70 @@ namespace Restaurantopia.Controllers
             }
         }
 
-        // GET: ItemController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Item item = await _repository.GetByIdAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return View(item);
         }
 
-        // POST: ItemController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(Item item)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _repository.UpdateAsync(item);
+                return RedirectToAction(nameof(ListOfItems));
             }
             catch
             {
-                return View();
+                return View(item);
             }
         }
 
-        // GET: ItemController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            Item D_item = await _repository.GetByIdAsync(id);
+            if (D_item == null)
+            {
+                return NotFound();
+            }
+            return View(D_item);
         }
 
-        // POST: ItemController/Delete/5
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, Item item)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (id != item.Id)
+                {
+                    return BadRequest();
+                }
+
+                await _repository.DeleteAsync(id);
+                return RedirectToAction(nameof(ListOfItems));
             }
             catch
             {
-                return View();
+                return View(item);
             }
         }
+
     }
 }
