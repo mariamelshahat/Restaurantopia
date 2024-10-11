@@ -7,28 +7,34 @@ namespace Restaurantopia.Controllers
 {
     public class ItemController : Controller
     {
-        private IGenericRepository<Item> _repository;
+        private IGenericRepository<Item> _Rep_Item;
+        private IGenericRepository<Category> _Rep_Category;
 
-        public ItemController(IGenericRepository<Item> repository)
+        public ItemController(IGenericRepository<Item> repository,IGenericRepository<Category> Rep)
         {
-            _repository = repository;
+            _Rep_Item = repository;
+            _Rep_Category = Rep;
         }
 
         public async Task<ActionResult> ListOfItems()
         {
-            var Items = await _repository.GetAllAsync();
+            var Items = await _Rep_Item.GetAllAsync();
+            ViewBag.C_s = await _Rep_Category.GetAllAsync();
             return View(Items);
         }
 
         public async Task<ActionResult> Details(int id)
         {
-            Item item = await _repository.GetByIdAsync(id);
+            Item item = await _Rep_Item.GetByIdAsync(id);
+            ViewBag.C_s = await _Rep_Category.GetAllAsync();
+
             return View(item);
         }
 
 
         public async Task<ActionResult> Create()
         {
+            ViewBag.C_s = await _Rep_Category.GetAllAsync();
             return View();
         }
 
@@ -38,7 +44,7 @@ namespace Restaurantopia.Controllers
         {
             try
             {
-                await _repository.AddAsync(item);
+                await _Rep_Item.AddAsync(item);
                 return RedirectToAction(nameof(ListOfItems));
             }
             catch
@@ -49,11 +55,12 @@ namespace Restaurantopia.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
+            ViewBag.C_s = await _Rep_Category.GetAllAsync();
             if (id == null)
             {
                 return NotFound();
             }
-            Item item = await _repository.GetByIdAsync(id);
+            Item item = await _Rep_Item.GetByIdAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -67,7 +74,7 @@ namespace Restaurantopia.Controllers
         {
             try
             {
-                await _repository.UpdateAsync(item);
+                await _Rep_Item.UpdateAsync(item);
                 return RedirectToAction(nameof(ListOfItems));
             }
             catch
@@ -82,7 +89,7 @@ namespace Restaurantopia.Controllers
             {
                 return NotFound();
             }
-            Item D_item = await _repository.GetByIdAsync(id);
+            Item D_item = await _Rep_Item.GetByIdAsync(id);
             if (D_item == null)
             {
                 return NotFound();
@@ -103,7 +110,7 @@ namespace Restaurantopia.Controllers
                     return BadRequest();
                 }
 
-                await _repository.DeleteAsync(id);
+                await _Rep_Item.DeleteAsync(id);
                 return RedirectToAction(nameof(ListOfItems));
             }
             catch

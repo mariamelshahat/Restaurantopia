@@ -58,7 +58,14 @@
                 @Html.DisplayFor(modelItem => item.ItemStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
+                    @foreach (var cat in ViewBag.C_s)
+                    {
+                        if (cat.Id == item.CategoryId)
+                        {
+                            @cat.CategoryName
+                            break;
+                        }
+                    }
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
