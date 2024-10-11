@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Restaurantopia.Models;
+
 namespace Restaurantopia
 {
 	public class Program
@@ -8,8 +11,9 @@ namespace Restaurantopia
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews ();
+            builder.Services.AddDbContext<MyDbContext>(Opt => Opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
-			var app = builder.Build ();
+            var app = builder.Build ();
 
 			// Configure the HTTP request pipeline.
 			if (!app.Environment.IsDevelopment ())
