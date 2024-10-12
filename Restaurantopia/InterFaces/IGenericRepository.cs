@@ -4,8 +4,7 @@ namespace Restaurantopia.InterFaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression = null, string[] inculdes = null);
-
+        Task<IEnumerable<T>> GetAllAsync(string[] inculdes = null);
         Task<T> GetByIdAsync(int id);
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);

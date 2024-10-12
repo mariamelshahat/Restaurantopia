@@ -17,18 +17,18 @@ namespace Restaurantopia.Entities.Models
 		public string ItemTitle { get; set; }
 		[StringLength ( 120 )]
 		public string? ItemDescription { get; set; }
-		[StringLength ( 500 )]
-		public string ItemImage { get; set; }
+		
+		public string? ItemImage { get; set; }
 		public decimal ItemPrice { get; set; }
 		
 
 		[ForeignKey ( "Category" )]
 		public int CategoryId { get; set; }
-		public Category Category { get; set; }
+		public Category? Category { get; set; }
         
-        public ICollection<OrderDetails> OrderDetails { get; set; }
+        public ICollection<OrderDetails>? OrderDetails { get; set; }
         [NotMapped]
-        public List<Category> categoryList { get; set; }
+        public List<Category>? categoryList { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
 

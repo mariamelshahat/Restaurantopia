@@ -11,7 +11,6 @@ namespace Restaurantopia.Controllers
     {
         private IGenericRepository<Item> _Rep_Item;
         private IGenericRepository<Category> _Rep_Category;
-
         private IWebHostEnvironment _environment;
         private IUploadFile _uploadFile;
 
@@ -21,8 +20,6 @@ namespace Restaurantopia.Controllers
             _Rep_Category = Rep;
             _environment = environment;
             _uploadFile = uploadFile;
-
-
         }
 
         public async Task<ActionResult> Menu()
@@ -64,17 +61,18 @@ namespace Restaurantopia.Controllers
 
                 if (item.ImageFile != null)
                 {
-                    string FilePath = await _uploadFile.UploadFileAsync("\\Images\\ItemImage\\", item.ImageFile);
+                    string FilePath = await _uploadFile.UploadFileAsync("\\Images\\ItemImage\\",item.ImageFile);
                     item.ItemImage = FilePath;
                 }
-                await _Rep_Item.AddAsync(item);
-                return RedirectToAction(nameof(Menu));
- 
-                await _Rep_Item.AddAsync(item);
+                    await _Rep_Item.AddAsync(item);
+                    return RedirectToAction(nameof(Menu));
+                
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(item);
+
             }
         }
 
