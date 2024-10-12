@@ -14,5 +14,6 @@ namespace Restaurantopia.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Review> Review { get; set; }
+       
     }
 }

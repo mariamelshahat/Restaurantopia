@@ -14,6 +14,7 @@ namespace Restaurantopia
 			builder.Services.AddControllersWithViews ();
             builder.Services.AddDbContext<MyDbContext>(Opt => Opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IUploadFile, UploadFile>();
             var app = builder.Build ();
 
 			

@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Restaurantopia.InterFaces;
 using Restaurantopia.Models;
+using System.Linq.Expressions;
 
 namespace Restaurantopia.Repositories
 {
+    //im
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private MyDbContext _db;
@@ -28,7 +30,7 @@ namespace Restaurantopia.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression = null, string[] inculdes = null)
         {
             IQueryable<T> query = _dbSet;
 

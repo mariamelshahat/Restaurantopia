@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Restaurantopia.Entities.Models;
 using Restaurantopia.InterFaces;
+using Restaurantopia.Repositories;
 
 namespace Restaurantopia.Controllers
 {
@@ -11,17 +12,29 @@ namespace Restaurantopia.Controllers
         private IGenericRepository<Item> _Rep_Item;
         private IGenericRepository<Category> _Rep_Category;
 
-        public ItemController(IGenericRepository<Item> repository,IGenericRepository<Category> Rep)
+        private IWebHostEnvironment _environment;
+        private IUploadFile _uploadFile;
+
+        public ItemController(IGenericRepository<Item> repository, IGenericRepository<Category> Rep, IWebHostEnvironment environment, IUploadFile uploadFile)
         {
             _Rep_Item = repository;
             _Rep_Category = Rep;
+            _environment = environment;
+            _uploadFile = uploadFile;
+
+
         }
 
-        public async Task<ActionResult> ListOfItems()
+        public async Task<ActionResult> Menu()
         {
-            var Items = await _Rep_Item.GetAllAsync();
-            ViewBag.C_s = await _Rep_Category.GetAllAsync();
+            IEnumerable<Item> Items;
+            
+            Items = await _Rep_Item.GetAllAsync(inculdes: new[] { "Category" });
+ 
+            //var Items = await _Rep_Item.GetAllAsync();
+          
             return View(Items);
+
         }
 
         public async Task<ActionResult> Details(int id)
@@ -35,8 +48,11 @@ namespace Restaurantopia.Controllers
 
         public async Task<ActionResult> Create()
         {
-            ViewBag.C_s = await _Rep_Category.GetAllAsync();
-            return View();
+
+            var categories = await _Rep_Category.GetAllAsync();
+            var item = new Item() { categoryList = categories.ToList() };
+            return View(item);
+ 
         }
 
         [HttpPost]
@@ -45,8 +61,16 @@ namespace Restaurantopia.Controllers
         {
             try
             {
+
+                if (item.ImageFile != null)
+                {
+                    string FilePath = await _uploadFile.UploadFileAsync("\\Images\\ItemImage\\", item.ImageFile);
+                    item.ItemImage = FilePath;
+                }
                 await _Rep_Item.AddAsync(item);
-                return RedirectToAction(nameof(ListOfItems));
+                return RedirectToAction(nameof(Menu));
+ 
+                await _Rep_Item.AddAsync(item);
             }
             catch
             {
@@ -76,7 +100,10 @@ namespace Restaurantopia.Controllers
             try
             {
                 await _Rep_Item.UpdateAsync(item);
-                return RedirectToAction(nameof(ListOfItems));
+
+                return RedirectToAction(nameof(Menu));
+ 
+ 
             }
             catch
             {
@@ -112,7 +139,10 @@ namespace Restaurantopia.Controllers
                 }
 
                 await _Rep_Item.DeleteAsync(id);
-                return RedirectToAction(nameof(ListOfItems));
+  
+                return RedirectToAction(nameof(Menu));
+ 
+
             }
             catch
             {

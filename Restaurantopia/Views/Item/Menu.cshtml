@@ -1,15 +1,23 @@
 ﻿@model IEnumerable<Restaurantopia.Entities.Models.Item>
 
 @{
-    ViewData["Title"] = "ListOfItems";
+    ViewData["Title"] = "Menu";
 }
 
 
+<div class="row">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+    <h1 class="col-md-6">Menu</h1>
+
+    <p class="col-md-6">
+        <a asp-action="Create" class="btn btn-success float-end">Create New</a>
+    </p>
+
+</div>
+<div class="row" id="cards">
+    <partial name="Cards" model="Model" />
+    </div>
+@* <table class="table">
     <thead>
         <tr>
             <th>
@@ -27,6 +35,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ItemPrice)
             </th>
+            
             <th>
                 CategoryName
             </th>
@@ -71,3 +80,4 @@
 }
     </tbody>
 </table>
+ *@
