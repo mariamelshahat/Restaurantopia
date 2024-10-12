@@ -6,6 +6,7 @@ using Restaurantopia.InterFaces;
 namespace Restaurantopia.Controllers
 {
     //test
+    // Ana Loay
     public class CategoryController : Controller
     {
         private IGenericRepository<Category> _repository;
