@@ -1,52 +1,63 @@
 ﻿@model IEnumerable<Restaurantopia.Entities.Models.OrderDetails>
 
 @{
-    ViewData["Title"] = "Order";
+    ViewData["Title"] = "Order Index";
 }
 
+<h1>Order Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id <!-- Display Order ID -->
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Total)
+                Item Name<!-- Display Item Name -->
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Total Price<!-- Display Total Price -->
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CustomerId)
+                Quantity <!-- Display Quantity -->
+            </th>
+            <th>
+                Date of Order <!-- Display Order Date -->
+            </th>
+            <th>
+                Image
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Id) <!-- Display Order ID -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Item.ItemTitle) <!-- Display Item Name -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Total) <!-- Display Total Price -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Quantity) <!-- Display Quantity -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Date) <!-- Display Order Date -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Item.ItemImage) <!-- Display Order Date -->
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = order.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = order.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = order.Id })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

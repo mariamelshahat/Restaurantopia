@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 
 namespace Restaurantopia.Entities.Models
 {
-	public class OrderDetails
-	{
+    public class OrderDetails
+    {
         public int Id { get; set; }
         public int Total { get; set; }
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime? Date { get; set; } = DateTime.Now;
+        public int Quantity { get; set; }
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        [NotMapped]
-
-       
-
-        public List<Item> itemList { get; set; }= new List<Item>();
+        [ForeignKey("Item")]
+        public int ItemId { get; set; }
+        public Item Item { get; set; }
 
     }
 }

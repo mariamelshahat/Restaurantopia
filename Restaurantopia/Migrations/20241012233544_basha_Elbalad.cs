@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Restaurantopia.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class basha_Elbalad : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,10 +49,9 @@ namespace Restaurantopia.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ItemTitle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ItemDescription = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
-                    ItemImage = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    ItemImage = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     ItemPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ItemStatus = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", maxLength: 100, nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,20 +65,22 @@ namespace Restaurantopia.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Review",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Comment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Rate = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Customer_Id = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_Review", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
+                        name: "FK_Review_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
@@ -93,46 +94,23 @@ namespace Restaurantopia.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Total = table.Column<int>(type: "int", nullable: false),
-                    Payment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
                     ItemId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderDetails", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_OrderDetails_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_OrderDetails_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Review",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Comment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    Rate = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Review", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Review_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -143,26 +121,19 @@ namespace Restaurantopia.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderDetails_CustomerId",
+                table: "OrderDetails",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_ItemId",
                 table: "OrderDetails",
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OrderId",
-                table: "OrderDetails",
-                column: "OrderId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
-                table: "Orders",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Review_OrderId",
+                name: "IX_Review_CustomerId",
                 table: "Review",
-                column: "OrderId",
-                unique: true);
+                column: "CustomerId");
         }
 
         /// <inheritdoc />
@@ -178,13 +149,10 @@ namespace Restaurantopia.Migrations
                 name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Customers");
         }
     }
 }

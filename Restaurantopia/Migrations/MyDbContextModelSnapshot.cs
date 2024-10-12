@@ -94,8 +94,8 @@ namespace Restaurantopia.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("ItemImage")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<decimal>("ItemPrice")
                         .HasColumnType("decimal(18,2)");
@@ -120,13 +120,16 @@ namespace Restaurantopia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ItemId")
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("Total")
@@ -187,15 +190,17 @@ namespace Restaurantopia.Migrations
                 {
                     b.HasOne("Restaurantopia.Entities.Models.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("Restaurantopia.Entities.Models.Item", "Item")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Restaurantopia.Entities.Models.Item", null)
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("ItemId");
-
                     b.Navigation("Customer");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Restaurantopia.Entities.Models.Review", b =>

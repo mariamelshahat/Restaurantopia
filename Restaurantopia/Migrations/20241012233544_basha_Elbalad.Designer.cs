@@ -12,8 +12,8 @@ using Restaurantopia.Models;
 namespace Restaurantopia.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20241011132451_first")]
-    partial class first
+    [Migration("20241012233544_basha_Elbalad")]
+    partial class basha_Elbalad
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,7 +90,6 @@ namespace Restaurantopia.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
-                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     b.Property<string>("ItemDescription")
@@ -98,17 +97,11 @@ namespace Restaurantopia.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("ItemImage")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
                     b.Property<decimal>("ItemPrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ItemStatus")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ItemTitle")
                         .IsRequired()
@@ -122,30 +115,6 @@ namespace Restaurantopia.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("Restaurantopia.Entities.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Customer_Id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("Restaurantopia.Entities.Models.OrderDetails", b =>
                 {
                     b.Property<int>("Id")
@@ -154,29 +123,26 @@ namespace Restaurantopia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("Payment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Total")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("ItemId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -193,6 +159,9 @@ namespace Restaurantopia.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -204,8 +173,7 @@ namespace Restaurantopia.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Review");
                 });
@@ -221,45 +189,32 @@ namespace Restaurantopia.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Restaurantopia.Entities.Models.Order", b =>
+            modelBuilder.Entity("Restaurantopia.Entities.Models.OrderDetails", b =>
                 {
                     b.HasOne("Restaurantopia.Entities.Models.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("Restaurantopia.Entities.Models.OrderDetails", b =>
-                {
                     b.HasOne("Restaurantopia.Entities.Models.Item", "Item")
                         .WithMany("OrderDetails")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Restaurantopia.Entities.Models.Order", "Order")
-                        .WithOne("OrderDetail")
-                        .HasForeignKey("Restaurantopia.Entities.Models.OrderDetails", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Customer");
 
                     b.Navigation("Item");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Restaurantopia.Entities.Models.Review", b =>
                 {
-                    b.HasOne("Restaurantopia.Entities.Models.Order", "Order")
-                        .WithOne("Review")
-                        .HasForeignKey("Restaurantopia.Entities.Models.Review", "OrderId")
+                    b.HasOne("Restaurantopia.Entities.Models.Customer", "customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
+                    b.Navigation("customer");
                 });
 
             modelBuilder.Entity("Restaurantopia.Entities.Models.Category", b =>
@@ -275,15 +230,6 @@ namespace Restaurantopia.Migrations
             modelBuilder.Entity("Restaurantopia.Entities.Models.Item", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("Restaurantopia.Entities.Models.Order", b =>
-                {
-                    b.Navigation("OrderDetail")
-                        .IsRequired();
-
-                    b.Navigation("Review")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

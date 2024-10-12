@@ -11,15 +11,17 @@ namespace Restaurantopia.Controllers
     {
         private IGenericRepository<Item> _Rep_Item;
         private IGenericRepository<Category> _Rep_Category;
+        private IGenericRepository<OrderDetails> _Rep_Order;
         private IWebHostEnvironment _environment;
         private IUploadFile _uploadFile;
 
-        public ItemController(IGenericRepository<Item> repository, IGenericRepository<Category> Rep, IWebHostEnvironment environment, IUploadFile uploadFile)
+        public ItemController(IGenericRepository<Item> repository, IGenericRepository<Category> Rep, IWebHostEnvironment environment, IUploadFile uploadFile, IGenericRepository<OrderDetails> rep_Order)
         {
             _Rep_Item = repository;
             _Rep_Category = Rep;
             _environment = environment;
             _uploadFile = uploadFile;
+            _Rep_Order = rep_Order;
         }
 
         public async Task<ActionResult> Menu()
@@ -147,6 +149,59 @@ namespace Restaurantopia.Controllers
                 return View(item);
             }
         }
+        public async Task<ActionResult> Order(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            Item item = await _Rep_Item.GetByIdAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return View(item);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Order(Item item)
+        {
+            if (item.Quantity <= 0) // Validate Quantity
+            {
+                ModelState.AddModelError("Quantity", "Quantity must be greater than zero.");
+                return View(item);
+            }
+
+            try
+            {
+                // Login 
+                int customerId = 1;
+
+                // Create a new OrderDetails object
+                OrderDetails orderDetails = new OrderDetails
+                {
+                    ItemId = item.Id, // Use the selected item's ID
+                    CustomerId = customerId,
+                    Quantity = item.Quantity,
+                    Total = (int)item.ItemPrice * item.Quantity, // Calculate total based on quantity
+                    Date = DateTime.Now
+                };
+
+                // Add the new orderDetails object to the database
+                await _Rep_Order.AddAsync(orderDetails);
+
+                // Redirect to the OrderDetails index after adding the item
+                return RedirectToAction("Index", "OrderDetails");
+            }
+            catch
+            {
+                return View(item);
+            }
+        }
+
 
     }
 }
