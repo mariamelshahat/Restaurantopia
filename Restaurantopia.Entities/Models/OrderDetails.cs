@@ -17,6 +17,6 @@ namespace Restaurantopia.Entities.Models
         public Customer Customer { get; set; }
 
         [NotMapped]
-        public List<Item> itemList { get; set; }
+        public List<Item> itemList { get; set; }= new List<Item>();
     }
 }

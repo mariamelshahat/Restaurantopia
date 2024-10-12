@@ -19,8 +19,7 @@ namespace Restaurantopia.Entities.Models
 		[StringLength ( 300 )]
 		public string ItemImage { get; set; }
 		public decimal ItemPrice { get; set; }
-		[StringLength ( 100 )]
-		public string ItemStatus { get; set; }
+		
 
 		[ForeignKey ( "Category" )]
 		public int CategoryId { get; set; }

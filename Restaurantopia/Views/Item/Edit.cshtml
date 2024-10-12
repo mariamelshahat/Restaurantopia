@@ -5,9 +5,6 @@
     SelectList Cats = new SelectList(ViewBag.C_s, "Id", "CategoryName");
 }
 
-<h1>Edit</h1>
-
-<h4>Item</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -33,11 +30,7 @@
                 <input asp-for="ItemPrice" class="form-control" />
                 <span asp-validation-for="ItemPrice" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ItemStatus" class="control-label"></label>
-                <input asp-for="ItemStatus" class="form-control" />
-                <span asp-validation-for="ItemStatus" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class="form-control" asp-items="Cats">
