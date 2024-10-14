@@ -84,18 +84,21 @@
                         <p>@item.ItemDescription</p>
                         <div class="options">
                             <h6>$@item.ItemPrice</h6>
-                        </div><div class="options">
-                        @Html.ActionLink("", "Edit", new { id = item.Id }, new { @class = "bi bi-pencil" }) |
-                        @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye" }) |
-                        @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "bi bi-trash" }) |
-                        @Html.ActionLink("", "Order", new { id = item.Id }, new { @class = "bi bi-cart" })
                         </div>
-
-                        
-                        
+                        <div class="options">
+                        @Html.ActionLink("", "Edit", new { id = item.Id }, new { @class = "bi bi-pencil icon-white" }) |
+                        @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye icon-white" }) |
+                        @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "bi bi-trash icon-white" }) |
+                        @Html.ActionLink("", "Order", new { id = item.Id }, new { @class = "bi bi-cart icon-white" })
+                        </div>
                     </div>
                 </div>
              </div> 
         }
     </div>
  </div> 
+ <style>
+     .icon-white {
+    color: black;
+}
+ </style>
