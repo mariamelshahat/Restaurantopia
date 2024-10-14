@@ -2,10 +2,11 @@
 
 @{
     ViewData["Title"] = "Edit";
-    SelectList Cats = new SelectList(ViewBag.C_s, "Id", "CategoryName");
+    Layout = "_CreateNewPage";
 }
 
-<hr />
+<section class="book_section layout_padding">
+    <div class="container">
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -33,8 +34,8 @@
 
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="Cats">
-                    <option value="">-- Select Category --</option>
+                <select asp-for="CategoryId" asp-items="@(new SelectList(Model.categoryList, "Id", "CategoryName"))" class="form-control">
+                    <option value="-1">-- Select a category --</option>
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
@@ -46,9 +47,23 @@
 </div>
 
 <div>
-    <a asp-action="ListOfItems">Back to List</a>
+    <a asp-action="Menu">Back to List</a>
 </div>
+</div>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        var loadFile = function (event) {
+            var output = document.getElementById("output");
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src);
+            }
+        }
+    </script>
 }

@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "_OrderPage";
 }
-
-
+<section class="book_section layout_padding">
+    <div class="container">
 <div>
     <dl class="row">
         <dt class = "col-sm-2">
@@ -57,3 +58,5 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     <a asp-action="ListOfItems">Back to List</a>
 </div>
+</div>
+</section>

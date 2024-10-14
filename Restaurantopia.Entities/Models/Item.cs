@@ -17,7 +17,7 @@ namespace Restaurantopia.Entities.Models
         public string ItemTitle { get; set; }
         [StringLength(120)]
         public string? ItemDescription { get; set; }
-        [StringLength(300)]
+        [StringLength(1000)]
         public string? ItemImage { get; set; }
         public decimal ItemPrice { get; set; }
         [Required]

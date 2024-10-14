@@ -5,19 +5,19 @@
     Layout = "_MenuPage";
 }
 
-@*
-<div class="row">
+
+@* <div class="row">
     <h1 class="col-md-6">Menu</h1>
     <p class="col-md-6">
         <a asp-action="Create" class="btn btn-success float-end">Create New</a>
     </p>
-</div>
+</div> *@
 
-<div class="row" id="cards">
+@* <div class="row" id="cards">
     <partial name="Cards" model="Model" />
 </div>
-*@
 
+ *@
 @*
 <table class="table">
     <thead>
@@ -60,20 +60,37 @@
 </table>
 *@
 
-<div class="filters-content">
+ <div class="filters-content"> 
     <div class="row grid">
         @foreach (var item in Model)
         {
-            <div class="col-sm-6 col-lg-4 all pizza">
+             <div class="col-sm-6 col-lg-4 all pizza"> 
                 <div class="box">
                     <div class="img-box">
-                        <img src="/images/@item.ImageFile" alt="Image for @item.ItemTitle">
+              @*   @if (item.ItemImage == null || item.ItemImage == "")
+                {
+
+                    <img src="\Images\ItemImage\no-image.webp" alt="NOImage" width="100%" height="100%" />
+                }
+                else
+                {
+                    <img src="@item.ItemImage" alt="NOImage" width="100%" height="100%" />
+                }
+            *@    <img src="@item.ItemImage" alt="Image for @item.ItemTitle">
                     </div>
                     <div class="detail-box">
                         <h5>@item.ItemTitle</h5>
                         <p>@item.ItemDescription</p>
                         <div class="options">
                             <h6>$@item.ItemPrice</h6>
+                        </div>
+                        <div class="options">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })|
+                    @Html.ActionLink("Order", "Order", new { id = item.Id })
+                        </div>
+                        <div class="options">
                             <a href="/Item/Order">
                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                      x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
@@ -99,10 +116,11 @@
                                         </g>
                                     </svg>
                             </a>
-                        </div>
+                    </div>
+                        
                     </div>
                 </div>
-            </div>
+             </div> 
         }
     </div>
-</div>
+ </div> 

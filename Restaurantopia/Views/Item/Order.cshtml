@@ -2,11 +2,17 @@
 
 @{
     ViewData["Title"] = "Order";
+    Layout = "_OrderPage";
 }
 
-<h1>Order</h1>
+<section class="book_section layout_padding">
+    <div class="container">
+<div class="heading_container">
+    <h2>
+        Are you sure you want to Order this?
+    </h2>
+</div>
 
-<h3>Are you sure you want to Order this?</h3>
 <div>
     <h4>Item</h4>
     <hr />
@@ -64,6 +70,8 @@
         </div>
 
         <input type="submit" value="Create Order" class="btn btn-primary" />
-        <a asp-action="ListOfItems" class="btn btn-secondary">Back to List</a>
+        <a asp-action="Menu" class="btn btn-secondary">Back to List</a>
     </form>
 </div>
+</div>
+</section>

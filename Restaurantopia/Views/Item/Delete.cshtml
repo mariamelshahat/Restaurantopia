@@ -2,11 +2,15 @@
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "_OrderPage";
 }
-
-
-
-<h3>Are you sure you want to delete this?</h3>
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+    <h3>
+    Are you sure you want to delete this?
+    </h3>
+    </div>
 <div>
     <h4>Item</h4>
     <hr />
@@ -52,6 +56,8 @@
     
     <form asp-action="Delete">
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="ListOfItems">Back to List</a>
+        <a asp-action="Menu">Back to List</a>
     </form>
 </div>
+</div>
+</section>

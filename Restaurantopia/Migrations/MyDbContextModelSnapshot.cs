@@ -94,8 +94,8 @@ namespace Restaurantopia.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("ItemImage")
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<decimal>("ItemPrice")
                         .HasColumnType("decimal(18,2)");
