@@ -63,7 +63,7 @@ namespace Restaurantopia.Controllers
 
                 if (item.ImageFile != null)
                 {
-                    string FilePath = await _uploadFile.UploadFileAsync("\\Images\\ItemImage\\",item.ImageFile);
+                    string FilePath = await _uploadFile.UploadFileAsync("\\Images\\",item.ImageFile);
                     item.ItemImage = FilePath;
                 }
                     await _Rep_Item.AddAsync(item);
