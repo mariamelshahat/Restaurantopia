@@ -4,7 +4,7 @@ using Restaurantopia.InterFaces;
 
 namespace Restaurantopia.Repositories
 {
-    public class UploadFile: IUploadFile
+    public class UploadFile : IUploadFile
     {
         private IWebHostEnvironment _environment;
 
@@ -22,7 +22,6 @@ namespace Restaurantopia.Repositories
             }
             string UniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
             string FullPath = Path.Combine(upLoadFolder, UniqueFileName);
-
             using (var stream = new FileStream(FullPath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
