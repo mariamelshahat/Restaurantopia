@@ -81,36 +81,64 @@ namespace Restaurantopia.Controllers
 
         public async Task<ActionResult> Edit ( int id )
         {
+            // Fetching categories for ViewBag for dropdown
             ViewBag.C_s = await _Rep_Category.GetAllAsync ();
-            if (id == null)
+
+            // Check if id is null
+            if (id == 0)  // id is an integer, so we check if it's 0 instead of null
             {
                 return NotFound ();
             }
+
+            // Get the item by id
             Item item = await _Rep_Item.GetByIdAsync ( id );
+
+            // If no item is found, return not found result
             if (item == null)
             {
                 return NotFound ();
             }
+
+            // Return the view with the item
             return View ( item );
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit ( Item item )
+        public async Task<IActionResult> Edit ( Item item )
         {
-            try
-            {
-                await _Rep_Item.UpdateAsync ( item );
+            ViewBag.C_s = await _Rep_Category.GetAllAsync ();  // Re-populate category list in case of validation errors
 
-                return RedirectToAction ( nameof ( Menu ) );
-
-
-            }
-            catch
+            if (!ModelState.IsValid)
             {
                 return View ( item );
             }
+
+            try
+            {
+                // Handle file upload if provided
+                if (item.clientFile != null && item.clientFile.Length > 0)
+                {
+                    using (var stream = new MemoryStream ())
+                    {
+                        await item.clientFile.CopyToAsync ( stream );
+                        // Save the image as needed, either in a database or file system
+                        item.dbimage = stream.ToArray ();  // or store the file path
+                    }
+                }
+
+                // Update item in repository
+                await _Rep_Item.UpdateAsync ( item );
+                return RedirectToAction ( nameof ( Menu ) );
+            }
+            catch (Exception ex)
+            {
+                // Log the error (optional)
+                ModelState.AddModelError ( "", "Unable to save changes. Please try again." );
+                return View ( item );  // Return back to the view in case of an exception
+            }
         }
+
 
         public async Task<ActionResult> Delete ( int id )
         {
