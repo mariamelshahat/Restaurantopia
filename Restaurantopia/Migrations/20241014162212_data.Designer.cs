@@ -12,7 +12,7 @@ using Restaurantopia.Models;
 namespace Restaurantopia.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20241014122130_data")]
+    [Migration("20241014162212_data")]
     partial class data
     {
         /// <inheritdoc />
@@ -107,6 +107,9 @@ namespace Restaurantopia.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<byte[]>("dbimage")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 

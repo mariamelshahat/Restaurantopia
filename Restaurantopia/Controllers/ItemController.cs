@@ -15,7 +15,7 @@ namespace Restaurantopia.Controllers
         private IWebHostEnvironment _environment;
         private IUploadFile _uploadFile;
 
-        public ItemController(IGenericRepository<Item> repository, IGenericRepository<Category> Rep, IWebHostEnvironment environment, IUploadFile uploadFile, IGenericRepository<OrderDetails> rep_Order)
+        public ItemController ( IGenericRepository<Item> repository, IGenericRepository<Category> Rep, IWebHostEnvironment environment, IUploadFile uploadFile, IGenericRepository<OrderDetails> rep_Order )
         {
             _Rep_Item = repository;
             _Rep_Category = Rep;
@@ -24,155 +24,163 @@ namespace Restaurantopia.Controllers
             _Rep_Order = rep_Order;
         }
 
-        public async Task<ActionResult> Menu()
+        public async Task<ActionResult> Menu ()
         {
             IEnumerable<Item> Items;
-            
-            Items = await _Rep_Item.GetAllAsync(inculdes: new[] { "Category" });
- 
+
+            Items = await _Rep_Item.GetAllAsync ( inculdes: new[] { "Category" } );
+
             //var Items = await _Rep_Item.GetAllAsync();
-          
-            return View(Items);
+
+            return View ( Items );
 
         }
 
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details ( int id )
         {
-            Item item = await _Rep_Item.GetByIdAsync(id);
-            ViewBag.C_s = await _Rep_Category.GetAllAsync();
+            Item item = await _Rep_Item.GetByIdAsync ( id );
+            ViewBag.C_s = await _Rep_Category.GetAllAsync ();
 
-            return View(item);
+            return View ( item );
         }
 
 
-        public async Task<ActionResult> Create()
+        public async Task<ActionResult> Create ()
         {
 
-            var categories = await _Rep_Category.GetAllAsync();
-            var item = new Item() { categoryList = categories.ToList() };
-            return View(item);
- 
+            var categories = await _Rep_Category.GetAllAsync ();
+            var item = new Item () { categoryList = categories.ToList () };
+            return View ( item );
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Item item)
+        public async Task<ActionResult> Create ( Item item )
         {
             try
             {
 
-                if (item.ImageFile != null)
+                //if (item.ImageFile != null)
+                //{
+                //    string FilePath = await _uploadFile.UploadFileAsync("\\Images\\ItemImage", item.ImageFile);
+                //    item.ItemImage = FilePath;
+                //}
+
+                if (item.clientFile != null)
                 {
-                    string FilePath = await _uploadFile.UploadFileAsync("\\Images\\ItemImage", item.ImageFile);
-                    item.ItemImage = FilePath;
+                    MemoryStream stream = new MemoryStream ();
+                    item.clientFile.CopyTo ( stream );
+                    item.dbimage = stream.ToArray ();
                 }
-                    await _Rep_Item.AddAsync(item);
-                    return RedirectToAction(nameof(Menu));
-                
+
+                await _Rep_Item.AddAsync ( item );
+                return RedirectToAction ( nameof ( Menu ) );
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
-                return View(item);
+                ModelState.AddModelError ( string.Empty, ex.Message );
+                return View ( item );
 
             }
         }
 
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit ( int id )
         {
-            ViewBag.C_s = await _Rep_Category.GetAllAsync();
+            ViewBag.C_s = await _Rep_Category.GetAllAsync ();
             if (id == null)
             {
-                return NotFound();
+                return NotFound ();
             }
-            Item item = await _Rep_Item.GetByIdAsync(id);
+            Item item = await _Rep_Item.GetByIdAsync ( id );
             if (item == null)
             {
-                return NotFound();
+                return NotFound ();
             }
-            return View(item);
+            return View ( item );
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Item item)
+        public async Task<ActionResult> Edit ( Item item )
         {
             try
             {
-                await _Rep_Item.UpdateAsync(item);
+                await _Rep_Item.UpdateAsync ( item );
 
-                return RedirectToAction(nameof(Menu));
- 
- 
+                return RedirectToAction ( nameof ( Menu ) );
+
+
             }
             catch
             {
-                return View(item);
+                return View ( item );
             }
         }
 
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete ( int id )
         {
             if (id == 0)
             {
-                return NotFound();
+                return NotFound ();
             }
-            Item D_item = await _Rep_Item.GetByIdAsync(id);
+            Item D_item = await _Rep_Item.GetByIdAsync ( id );
             if (D_item == null)
             {
-                return NotFound();
+                return NotFound ();
             }
-            return View(D_item);
+            return View ( D_item );
         }
 
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, Item item)
+        public async Task<ActionResult> Delete ( int id, Item item )
         {
             try
             {
                 if (id != item.Id)
                 {
-                    return BadRequest();
+                    return BadRequest ();
                 }
 
-                await _Rep_Item.DeleteAsync(id);
-  
-                return RedirectToAction(nameof(Menu));
- 
+                await _Rep_Item.DeleteAsync ( id );
+
+                return RedirectToAction ( nameof ( Menu ) );
+
 
             }
             catch
             {
-                return View(item);
+                return View ( item );
             }
         }
-        public async Task<ActionResult> Order(int id)
+        public async Task<ActionResult> Order ( int id )
         {
             if (id == 0)
             {
-                return NotFound();
+                return NotFound ();
             }
-            Item item = await _Rep_Item.GetByIdAsync(id);
+            Item item = await _Rep_Item.GetByIdAsync ( id );
             if (item == null)
             {
-                return NotFound();
+                return NotFound ();
             }
-            return View(item);
+            return View ( item );
         }
 
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Order(Item item)
+        public async Task<ActionResult> Order ( Item item )
         {
             if (item.Quantity <= 0) // Validate Quantity
             {
-                ModelState.AddModelError("Quantity", "Quantity must be greater than zero.");
-                return View(item);
+                ModelState.AddModelError ( "Quantity", "Quantity must be greater than zero." );
+                return View ( item );
             }
 
             try
@@ -191,14 +199,14 @@ namespace Restaurantopia.Controllers
                 };
 
                 // Add the new orderDetails object to the database
-                await _Rep_Order.AddAsync(orderDetails);
+                await _Rep_Order.AddAsync ( orderDetails );
 
                 // Redirect to the OrderDetails index after adding the item
-                return RedirectToAction("Menu");
+                return RedirectToAction ( "Menu" );
             }
             catch
             {
-                return View(item);
+                return View ( item );
             }
         }
 

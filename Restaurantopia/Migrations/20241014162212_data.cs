@@ -51,7 +51,8 @@ namespace Restaurantopia.Migrations
                     ItemDescription = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
                     ItemImage = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     ItemPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    dbimage = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {

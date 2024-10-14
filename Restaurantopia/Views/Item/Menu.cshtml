@@ -68,17 +68,16 @@
              <div class="col-sm-6 col-lg-4 all pizza"> 
                 <div class="box">
                     <div class="img-box">
-                @if (item.ItemImage == null || item.ItemImage == "")
-                {
-
-                    <img src="\Images\no-image.webp" alt="NOImage" width="100%" height="100%" />
-                }
-                else
-                {
-                    <img src="@item.ItemImage" alt="NOImage" width="100%" height="100%" />
-                }
-               @* <img src="@item.ItemImage" alt="Image for @item.ItemTitle"> *@
+                        @if (item.imageSrc == null || item.imageSrc == "")
+                        {
+                            <img src="\Images\no-image.webp" alt="NOImage" width="100%" height="100%" style="padding: 0; margin: 0; border: none;" />
+                        }
+                        else
+                        {
+                            <img src="@item.imageSrc" alt="NOImage" width="100%" height="100%" style="padding: 0; margin: 0; border: none;" />
+                        }
                     </div>
+
                     <div class="detail-box">
                         <h5>@item.ItemTitle</h5>
                         <p>@item.ItemDescription</p>

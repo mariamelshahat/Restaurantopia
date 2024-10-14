@@ -13,24 +13,49 @@ namespace Restaurantopia.Entities.Models
     {
         [Key]
         public int Id { get; set; }
-        [StringLength(100)]
+        [StringLength ( 100 )]
         public string ItemTitle { get; set; }
-        [StringLength(120)]
+        [StringLength ( 120 )]
         public string? ItemDescription { get; set; }
-        [StringLength(1000)]
+        [StringLength ( 1000 )]
         public string? ItemImage { get; set; }
         public decimal ItemPrice { get; set; }
         [Required]
         [NotMapped]
         public int Quantity { get; set; }
 
-        [ForeignKey("Category")]
+        [ForeignKey ( "Category" )]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public ICollection<OrderDetails>? OrderDetails { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
+
+        [NotMapped]
+
+        public IFormFile? clientFile { get; set; }
+
+        public byte[]? dbimage { get; set; }
+
+        [NotMapped]
+        public string? imageSrc
+        {
+            get
+            {
+                if (dbimage != null)
+                {
+                    string base64String = Convert.ToBase64String ( dbimage, 0, dbimage.Length );
+                    return "data:image/jpg;base64," + base64String;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
         [NotMapped]
         public List<Category>? categoryList { get; set; }
     }
+
 }
