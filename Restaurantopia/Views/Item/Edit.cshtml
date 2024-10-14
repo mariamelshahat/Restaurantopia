@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "_CreateNewPage";
+    Layout = "_editpage";
 }
 
 <section class="book_section layout_padding">
@@ -38,6 +38,13 @@
                     <option value="-1">-- Select a category --</option>
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" onchange="loadFile(event)" />
+            </div>
+            <div class="col-md-4 mt-2">
+                <img id="output" width="100%" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
