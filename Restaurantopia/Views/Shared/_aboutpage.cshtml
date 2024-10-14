@@ -13,10 +13,10 @@
     <meta name="author" content="" />
     <link rel="shortcut icon" href="/images/favicon.png" type="">
 
-    <title> Restaurantopia </title>
+    <title> Feane </title>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+    <link rel="stylesheet" type="/text/css" href="/css/bootstrap.css" />
 
     <!--owl slider stylesheet -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
@@ -36,7 +36,7 @@
 
     <div class="hero_area">
         <div class="bg-box">
-            <img src="/images/home4.jpg" alt="">
+            <img src="/images/hero-bg.jpg" alt="">
         </div>
         <!-- header section strats -->
         <header class="header_section">
@@ -54,24 +54,21 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav  mx-auto ">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Home/Index">Home </a>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="index.html">Home </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Item/Menu">Menu</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/About/Index">About</a>
+                                <a class="nav-link" href="menu.html">Menu</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="/Review/Add">Review <span class="sr-only">(current)</span> </a>
-                            </li>
+                                <a class="nav-link" href="about.html">About <span class="sr-only">(current)</span> </a>
+                            </li>                           
                         </ul>
                         <div class="user_option">
                             <a href="" class="user_link">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
-                            <a class="cart_link" href="/Item/Menu">
+                            <a class="cart_link" href="#">
                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                 <g>
                                 <g>
@@ -125,6 +122,11 @@
                   </g>
                 </svg>
                             </a>
+                            <form class="form-inline">
+                                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>                           
                         </div>
                     </div>
                 </nav>
@@ -132,63 +134,12 @@
         </header>
         <!-- end header section -->
     </div>
+
+    <!-- about section -->
+
     @RenderBody()
 
-    <!-- book section -->
-    @* <section class="book_section layout_padding">
-        <div class="container">
-            <div class="heading_container">
-                <h2>
-                    Book A Table
-                </h2>
-            </div>
-              <div class="row">
-                 <div class="col-md-6">
-                     <div class="form_container">
-                         <form action="">
-                             <div>
-                                 <input type="text" class="form-control" placeholder="Your Name" />
-                             </div>
-                             <div>
-                                 <input type="text" class="form-control" placeholder="Phone Number" />
-                             </div>
-                             <div>
-                                 <input type="email" class="form-control" placeholder="Your Email" />
-                             </div>
-                             <div>
-                                 <select class="form-control nice-select wide">
-                                     <option value="" disabled selected>
-                                         How many persons?
-                                     </option>
-                                     <option value="">
-                                         2
-                                     </option>
-                                     <option value="">
-                                         3
-                                     </option>
-                                     <option value="">
-                                         4
-                                     </option>
-                                     <option value="">
-                                         5
-                                     </option>
-                                 </select>
-                             </div>
-                             <div>
-                                 <input type="date" class="form-control">
-                             </div>
-                             <div class="btn_box">
-                                 <button>
-                                     Book Now
-                                 </button>
-                             </div>
-                         </form>
-                     </div>
-                 </div>
-            </div>
-    </div> 
-    </section>
-     *@<!-- end book section -->
+    <!-- end about section -->
     <!-- footer section -->
     <footer class="footer_section">
         <div class="container">
@@ -198,7 +149,7 @@
                         <h4>
                             Contact Us
                         </h4>
-                        <div class="contact_link_box">
+                        <div class="contact_link_box">                         
                             <a href="">
                                 <i class="fa fa-phone" aria-hidden="true"></i>
                                 <span>
@@ -255,9 +206,10 @@
             </div>
             <div class="footer-info">
                 <p>
-                    <span id="displayYear"></span>
-                    <span id="displayYear"></span> 
-                    <a href="https://themewagon.com/" target="_blank"></a>
+                    &copy; <span id="displayYear"></span> All Rights Reserved By
+                    <a href="https://html.design/">Free Html Templates</a><br><br>
+                    &copy; <span id="displayYear"></span> Distributed By
+                    <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
                 </p>
             </div>
         </div>
@@ -287,3 +239,4 @@
 </body>
 
 </html>
+
