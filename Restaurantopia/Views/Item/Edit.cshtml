@@ -4,67 +4,91 @@
     ViewData["Title"] = "Edit";
     Layout = "_CreateNewPage";
 }
-
 <section class="book_section layout_padding">
     <div class="container">
+        <div class="heading_container">
+            <h2>
+                Edit Item
+            </h2>
+        </div>
         <div class="row">
-            <div class="col-md-4">
-                <form asp-action="Edit" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-6">
+                <div class="form_container">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="form-group">
-                        <label asp-for="ItemTitle" class="control-label"></label>
-                        <input asp-for="ItemTitle" class="form-control" />
-                        <span asp-validation-for="ItemTitle" class="text-danger"></span>
-                    </div>
+    <div class="form-floating mb-3">
+        <label class="styled-label" asp-for="ItemTitle"></label>
+        <input asp-for="ItemTitle" class="form-control" placeholder="Item Title" />
+        <span asp-validation-for="ItemTitle" class="text-danger"></span>
+    </div>
 
-                    <div class="form-group">
-                        <label asp-for="ItemDescription" class="control-label"></label>
-                        <input asp-for="ItemDescription" class="form-control" />
-                        <span asp-validation-for="ItemDescription" class="text-danger"></span>
-                    </div>
+    <div class="form-floating mb-3">
+        <label class="styled-label" asp-for="ItemDescription"></label>
+        <input asp-for="ItemDescription" class="form-control" placeholder="Item Description" />
+        <span asp-validation-for="ItemDescription" class="text-danger"></span>
+    </div>
 
-                    <div class="form-group">
-                        <label asp-for="ItemImage" class="control-label"></label>
-                        <input asp-for="ItemImage" class="form-control" />
-                        <span asp-validation-for="ItemImage" class="text-danger"></span>
-                    </div>
+    <div class="form-floating mb-3">
+        <label class="styled-label" asp-for="ItemPrice"></label>
+        <input asp-for="ItemPrice" class="form-control" placeholder="Item Price" />
+        <span asp-validation-for="ItemPrice" class="text-danger"></span>
+    </div>
 
-                    <div class="form-group">
-                        <label asp-for="ItemPrice" class="control-label"></label>
-                        <input asp-for="ItemPrice" class="form-control" />
-                        <span asp-validation-for="ItemPrice" class="text-danger"></span>
-                    </div>
+    <div class="form-floating mb-3">
+        <label class="styled-label" asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" class="form-control custom-dropdown nice-select wide">
+            <option value="-1" disabled selected>Select a category</option>
+            @foreach (var category in ViewBag.C_s)
+            {
+                <option value="@category.Id">@category.CategoryName</option>
+            }
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
 
-                    <div class="form-group">
-                        <label asp-for="CategoryId" class="control-label"></label>
-                        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.C_s, "Id", "CategoryName"))" class="form-control">
-                            <option value="-1">-- Select a category --</option>
-                        </select>
-                        <span asp-validation-for="CategoryId" class="text-danger"></span>
-                    </div>
+    <div class="form-floating mb-3">
+        <label class="styled-label" asp-for="clientFile"></label>
+        <input type="file" asp-for="clientFile" class="form-control" onchange="loadFile(event)" />
+        <div class="image-container mt-2">
+            @if (!string.IsNullOrEmpty(Model.imageSrc))
+            {
+                <img id="output" src="@Model.imageSrc" alt="Current Image" />
+            }
+            else
+            {
+                <img id="output" src="\Images\no-image.webp" alt="No Image Available" />
+            }
+        </div>
+    </div>
 
-                    <div class="form-group">
-                        <label asp-for="clientFile" class="control-label"></label>
-                        <input type="file" asp-for="clientFile" class="form-control" onchange="loadFile(event)" />
-                    </div>
+    <div class="btn_box">
+        <button type="submit" class="btn btn-primary" >
+            Save
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Menu")'">
+            Back To Menu
+        </button>
+    </div>
+</form>
 
-                    <div class="col-md-4 mt-2">
-                        <img id="output" width="100%" />
-                    </div>
-
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
 
-        <div>
-            <a asp-action="Menu">Back to List</a>
-        </div>
     </div>
 </section>
+
+<script>
+    var loadFile = function(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('output');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 
 @section Scripts {
     @{
@@ -83,3 +107,29 @@
         }
     </script>
 }
+<style>
+      .image-container {
+    max-width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+    border-radius: 10px;
+}
+.styled-label {
+    font-size: 1.25rem; /* Increase font size */
+    font-weight: 600; /* Make text bold */
+    color: #333; /* Darker text color for better readability */
+    text-transform: uppercase; /* Make the label text uppercase */
+    letter-spacing: 0.05rem; /* Add some spacing between letters */
+    margin-bottom: 10px; /* Add space below the label */
+    display: inline-block; /* Ensures label behaves like a block element */
+}
+
+
+</style>

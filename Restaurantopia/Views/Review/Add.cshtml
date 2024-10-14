@@ -16,7 +16,8 @@
             <div class="col-md-6">
                 <div class="form_container">
                     <form asp-action="Add">
-                        <div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class ="form-floating mb-3">
                             <input asp-for="Comment" class="form-control" placeholder="Comment" />
                             <span asp-validation-for="Comment" class="text-danger"></span>
                         </div>
