@@ -194,7 +194,7 @@ namespace Restaurantopia.Controllers
                 await _Rep_Order.AddAsync(orderDetails);
 
                 // Redirect to the OrderDetails index after adding the item
-                return RedirectToAction("Index", "OrderDetails");
+                return RedirectToAction("Menu");
             }
             catch
             {
