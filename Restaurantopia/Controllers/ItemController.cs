@@ -6,7 +6,6 @@ using Restaurantopia.Repositories;
 
 namespace Restaurantopia.Controllers
 {
-    // ana loay elsayed
     public class ItemController : Controller
     {
         private IGenericRepository<Item> _Rep_Item;
@@ -60,12 +59,6 @@ namespace Restaurantopia.Controllers
         {
             try
             {
-
-                //if (item.ImageFile != null)
-                //{
-                //    string FilePath = await _uploadFile.UploadFileAsync("\\Images\\ItemImage", item.ImageFile);
-                //    item.ItemImage = FilePath;
-                //}
 
                 if (item.clientFile != null)
                 {
@@ -177,7 +170,7 @@ namespace Restaurantopia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Order ( Item item )
         {
-            if (item.Quantity <= 0) // Validate Quantity
+            if (item.Quantity <= 0) 
             {
                 ModelState.AddModelError ( "Quantity", "Quantity must be greater than zero." );
                 return View ( item );
@@ -188,17 +181,14 @@ namespace Restaurantopia.Controllers
                 // Login 
                 int customerId = 1;
 
-                // Create a new OrderDetails object
                 OrderDetails orderDetails = new OrderDetails
                 {
-                    ItemId = item.Id, // Use the selected item's ID
+                    ItemId = item.Id, 
                     CustomerId = customerId,
                     Quantity = item.Quantity,
-                    Total = (int)item.ItemPrice * item.Quantity, // Calculate total based on quantity
+                    Total = (int)item.ItemPrice * item.Quantity, 
                     Date = DateTime.Now
                 };
-
-                // Add the new orderDetails object to the database
                 await _Rep_Order.AddAsync ( orderDetails );
 
                 

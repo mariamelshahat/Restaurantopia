@@ -9,7 +9,6 @@ namespace Restaurantopia.Controllers
 {
     public class OrderDetailsController : Controller
     {
-        // GET: OrderDetailsController
         private IGenericRepository<OrderDetails> _orderrepository;
         private IGenericRepository<Item> _Rep_Item;
 
@@ -27,7 +26,6 @@ namespace Restaurantopia.Controllers
             return View(orderDetailsList);
         }
 
-        // GET: OrderDetailsController/Details/5
         public async Task<ActionResult> Details(int id)
         {
             var orderDetailsList = await _orderrepository.GetByIdAsync(id);
@@ -35,7 +33,6 @@ namespace Restaurantopia.Controllers
             return View(orderDetailsList);
         }
 
-        // GET: OrderDetailsController/Create
         public ActionResult Create()
         {
             return View();
@@ -55,13 +52,11 @@ namespace Restaurantopia.Controllers
                 return View();
             }
         }
-        // GET: OrderDetailsController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: OrderDetailsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -76,7 +71,6 @@ namespace Restaurantopia.Controllers
             }
         }
 
-        // GET: OrderDetailsController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
             if (id == 0)

@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 
 namespace Restaurantopia.Repositories
 {
-    //im
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private MyDbContext _db;
