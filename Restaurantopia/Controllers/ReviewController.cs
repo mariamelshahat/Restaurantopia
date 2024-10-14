@@ -98,7 +98,7 @@ namespace Restaurantopia.Controllers
 
 
             var i = await _reviewrepository.AddAsync ( review );
-            return RedirectToAction ( "Index" );
+            return RedirectToAction ( "Add" );
         }
     }
 }
