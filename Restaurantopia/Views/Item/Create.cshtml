@@ -19,25 +19,25 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="form-floating mb-3">
-                            <label class="styled-label" asp-for="ItemTitle"></label>
+                            <label class="styled-label" asp-for="ItemTitle">Title</label>
                             <input asp-for="ItemTitle" class="form-control" placeholder="Item Title" />
                             <span asp-validation-for="ItemTitle" class="text-danger"></span>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <label class="styled-label" asp-for="ItemDescription"></label>
+                            <label class="styled-label" asp-for="ItemDescription">Description</label>
                             <input asp-for="ItemDescription" class="form-control" placeholder="Item Description" />
                             <span asp-validation-for="ItemDescription" class="text-danger"></span>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <label class="styled-label" asp-for="ItemPrice"></label>
+                            <label class="styled-label" asp-for="ItemPrice">Price</label>
                             <input asp-for="ItemPrice" class="form-control" placeholder="Item Price" />
                             <span asp-validation-for="ItemPrice" class="text-danger"></span>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <label class="styled-label" asp-for="CategoryId"></label>
+                            <label class="styled-label" asp-for="CategoryId">Category Name</label>
                             <select asp-for="CategoryId" asp-items="@(new SelectList(Model.categoryList, "Id", "CategoryName"))" class="form-control">
                                 <option value="-1" disabled selected>-- Select a category --</option>
                             </select>
@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <label class="styled-label" asp-for="clientFile"></label>
+                            <label class="styled-label" asp-for="clientFile">Image</label>
                             <input type="file" asp-for="clientFile" class="form-control" onchange="loadFile(event)" />
                             <div class="image-container mt-2">
                                 @if (!string.IsNullOrEmpty(Model.imageSrc))

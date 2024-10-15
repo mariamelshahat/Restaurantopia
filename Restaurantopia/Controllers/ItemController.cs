@@ -102,17 +102,19 @@ namespace Restaurantopia.Controllers
 
             //// Return the view with the item
             //return View ( item );
+
             //var categories = await _Rep_Category.GetAllAsync();
             //var items = await _Rep_Item.GetByIdAsync(id);
             //items.categoryList = categories.ToList();
             //return View(items);
-            
-            
-                var item = await _Rep_Item.GetByIdAsync(id);
+       
+
+            var item = await _Rep_Item.GetByIdAsync(id);
                 if (item == null)
                 {
                     return NotFound();
                 }
+
                var categories = await _Rep_Category.GetAllAsync();
             item.categoryList = categories.ToList();// Make sure to initialize this list
                 return View(item);
