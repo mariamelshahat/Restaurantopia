@@ -52,7 +52,7 @@
 </div>
  *@
                         <div class="form-floating mb-3">
-                            <label class="styled-label" asp-for="CategoryId">Category Name</label>
+                            <label class="styled-label" asp-for="CategoryId">Category</label>
                             <select asp-for="CategoryId" asp-items="@(new SelectList(Model.categoryList, "Id", "CategoryName"))" class="form-control">
                                 <option value="-1" disabled selected>-- Select a category --</option>
                             </select>
