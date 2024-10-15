@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurantopia.Models;
 
@@ -11,9 +12,11 @@ using Restaurantopia.Models;
 namespace Restaurantopia.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241015132801_adding_Identity")]
+    partial class adding_Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,22 +50,6 @@ namespace Restaurantopia.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "21c347bd-fb35-426c-8c5f-8ec49c86f91f",
-                            ConcurrencyStamp = "9af538e7-65ce-48bb-afa4-5c937f516e42",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "e70cb147-e4ec-452a-9b8c-6cd5a854baee",
-                            ConcurrencyStamp = "1b23be7c-28e5-482d-8c3b-5ffe086fc46f",
-                            Name = "Customer",
-                            NormalizedName = "customer"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Restaurantopia.InterFaces;
 using Restaurantopia.Models;
 using Restaurantopia.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 namespace Restaurantopia
 {
@@ -13,6 +14,10 @@ namespace Restaurantopia
 			
 			builder.Services.AddControllersWithViews ();
             builder.Services.AddDbContext<MyDbContext>(Opt => Opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+			.AddRoles<IdentityRole>()
+			.AddEntityFrameworkStores<MyDbContext>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUploadFile, UploadFile>();
             var app = builder.Build ();
@@ -35,7 +40,9 @@ namespace Restaurantopia
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}" );
 
-			app.Run ();
+            app.UseEndpoints(endpoint => endpoint.MapRazorPages());
+
+            app.Run ();
 		}
 	}
 }

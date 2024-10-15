@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Restaurantopia.Entities.Models;
 
 namespace Restaurantopia.Models
 {
-    public class MyDbContext : DbContext {
+    public class MyDbContext : IdentityDbContext<IdentityUser>
+    {
     public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
     {
 
@@ -14,6 +17,32 @@ namespace Restaurantopia.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Review> Review { get; set; }
-       
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Ensure base IdentityDbContext configurations are applied
+            base.OnModelCreating(modelBuilder);
+
+            // Seed roles for Identity
+            modelBuilder.Entity<IdentityRole>().HasData
+            (
+                new IdentityRole
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                },
+                
+                 new IdentityRole
+                 {
+                     Id = Guid.NewGuid().ToString(),
+                     Name = "Customer",
+                     NormalizedName = "customer",
+                     ConcurrencyStamp = Guid.NewGuid().ToString(),
+                 }
+            );
+        }
     }
 }
