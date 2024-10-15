@@ -2,9 +2,17 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "_HomeLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
+
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h1>
+                Register
+            </h1>
+        </div>
 
 <div class="row">
     <div class="col-md-4">
@@ -41,7 +49,7 @@
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
-    <div class="col-md-6 col-md-offset-2">
+@*     <div class="col-md-6 col-md-offset-2">
         <section>
             <h3>Use another service to register.</h3>
             <hr />
@@ -72,9 +80,10 @@
                 }
             }
         </section>
-    </div>
+    </div> *@
 </div>
-
+</div>
+</section>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

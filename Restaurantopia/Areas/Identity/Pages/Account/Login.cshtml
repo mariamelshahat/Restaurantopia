@@ -3,9 +3,15 @@
 
 @{
     ViewData["Title"] = "Log in";
+    Layout = "_HomeLayout";
 }
-
-<h1>@ViewData["Title"]</h1>
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h1>
+             Login
+            </h1>
+        </div>
 <div class="row">
     <div class="col-md-4">
         <section>
@@ -48,7 +54,7 @@
             </form>
         </section>
     </div>
-    <div class="col-md-6 col-md-offset-2">
+   @*  <div class="col-md-6 col-md-offset-2">
         <section>
             <h3>Use another service to log in.</h3>
             <hr />
@@ -77,9 +83,10 @@
                 }
             }
         </section>
-    </div>
+    </div> *@
 </div>
-
+</div>
+</section>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
