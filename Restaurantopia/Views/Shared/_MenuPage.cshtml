@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Restaurantopia.Entities.Models
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -42,11 +43,12 @@
         <header class="header_section">
             <div class="container">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                         <span>
                             Restaurantopia
                         </span>
                     </a>
+
 
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,10 +102,14 @@
                     </g>
                   </g>
                            </svg>
-                            </a>
-                            <a href="/Item/Create" class="order_online">
-                               Create New
-                            </a>
+                                @if (User.IsInRole(RolesNames.roleAdmin))
+                                {
+                                    <a href="/Item/Create" class="order_online">
+                                        Create New
+                                    </a>
+                                }
+                                <partial name="_LoginPartial" />
+
                             
                        
                     </div> 

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Restaurantopia.Entities.Models
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -42,11 +43,14 @@
         <header class="header_section">
             <div class="container">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a class="navbar-brand" href="index.html">
-                        <span>
-                            Restaurantopia
-                        </span>
-                    </a>
+                    <nav class="navbar navbar-expand-lg custom_nav-container">
+                        <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                            <span>
+                                Restaurantopia
+                            </span>
+                        </a>
+                    </nav>
+
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class=""> </span>
@@ -67,9 +71,11 @@
                             <li class="nav-item active">
                                 <a class="nav-link" href="/Review/Add">Review <span class="sr-only">(current)</span> </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Roles" asp-action="Index">User Roles</a>
-                            </li>
+                            @if (User.IsInRole(RolesNames.roleAdmin))
+                            {
+                                <a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                            }
+                           
                         </ul>
                         <div class="user_option">
                             <a href="" class="user_link">
