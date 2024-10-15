@@ -49,13 +49,29 @@
                     <div class="mb-3">
                         <label class="form-label styled-label">@Html.DisplayNameFor(model => model.Item.clientFile)</label>
                         <div class="image-container">
-                            @if (string.IsNullOrEmpty(Model.Item.imageSrc)) // Check if imageSrc is null or empty
+                            @* @if (string.IsNullOrEmpty(Model.Item.imageSrc)) // Check if imageSrc is null or empty
                             {
                                 <img src="/Images/no-image.webp" alt="No Image Available" class="img-fluid img-thumbnail" />
                             }
                             else
                             {
                                 <img src="@Url.Content(Model.Item.imageSrc)" alt="Item Image" class="img-fluid img-thumbnail" />
+                            } *@
+
+                            @if (Model.Item != null) // First check if Model.Item is not null
+                            {
+                                if (string.IsNullOrEmpty(Model.Item.imageSrc)) // Check if imageSrc is null or empty
+                                {
+                                    <img src="/Images/no-image.webp" alt="No Image Available" class="img-fluid img-thumbnail" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(Model.Item.imageSrc)" alt="Item Image" class="img-fluid img-thumbnail" />
+                                }
+                            }
+                            else
+                            {
+                                <img src="/Images/no-image.webp" alt="No Image Available" class="img-fluid img-thumbnail" />
                             }
                         </div>
                     </div>
