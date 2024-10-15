@@ -1,0 +1,36 @@
+﻿@model Restaurantopia.Entities.Models.OrderDetails
+
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="Quantity" class="control-label"></label>
+            <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ItemId" class="control-label"></label>
+            <input asp-for="ItemId" type="hidden" />
+            <p>@Model.Item.ItemTitle</p> <!-- Display selected item title -->
+        </div>
+        <div class="form-group">
+            <label asp-for="Total" class="control-label"></label>
+            <input asp-for="Total" class="form-control" disabled />
+        </div>
+        <div>
+            <input type="submit" value="Create Order" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

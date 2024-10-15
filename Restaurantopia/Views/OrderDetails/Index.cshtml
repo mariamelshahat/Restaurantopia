@@ -1,116 +1,29 @@
 ﻿@model IEnumerable<Restaurantopia.Entities.Models.OrderDetails>
 
 @{
-    ViewData["Title"] = "Order Index";
-    Layout = "_HomeLayout"; // Ensure the layout is consistent
+    ViewData["Title"] = "My Orders";
 }
 
-<section class="book_section layout_padding">
-    <div class="container">
-        <div class="heading_container">
-            <h2>Order Details</h2> <!-- Updated heading -->
-        </div>
-        <div class="row">
-            @foreach (var order in Model)
-            {
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <!-- Order ID -->
-                            <h5 class="card-title">@Html.DisplayFor(modelItem => order.Id)</h5>
+<h1>My Orders</h1>
 
-                            <!-- Item Title -->
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                @if (order.Item != null) // Check if Item is not null
-                                {
-                                    @Html.DisplayFor(modelItem => order.Item.ItemTitle)
-                                }
-                                else
-                                {
-                                    <span class="text-danger">Item Not Available</span>
-                                }
-                            </h6>
-
-                            <!-- Total Price -->
-                            <p class="card-text">
-                                Total Price: @Html.DisplayFor(modelItem => order.Total) <!-- Display Total Price -->
-                            </p>
-
-                            <!-- Quantity -->
-                            <p class="card-text">
-                                Quantity: @Html.DisplayFor(modelItem => order.Quantity) <!-- Display Quantity -->
-                            </p>
-
-                            <!-- Date of Order -->
-                            <p class="card-text">
-                                Date of Order: @Html.DisplayFor(modelItem => order.Date) <!-- Display Order Date -->
-                            </p>
-
-                            <!-- Image -->
-                            <div class="image-container mb-3">
-                                @if (order.Item != null && !string.IsNullOrEmpty(order.Item.imageSrc))
-                                {
-                                    <img src="@Url.Content(order.Item.imageSrc)" alt="Item Image" class="img-fluid img-thumbnail" />
-                                }
-                                else
-                                {
-                                    <img src="/Images/no-image.webp" alt="No Image Available" class="img-fluid img-thumbnail" />
-                                }
-                            </div>
-
-                            <!-- Action Links -->
-                            <div class="btn_box">
-                                @Html.ActionLink("Details", "Details", new { id = order.Id }, new { @class = "btn btn-info" }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = order.Id }, new { @class = "btn btn-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</section>
-
-<style>
-    .image-container {
-        max-width: 100%;
-        max-height: 200px; /* Adjust height as necessary */
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-        border-radius: 10px; /* Rounded corners for the image */
-    }
-
-        .image-container img {
-            width: 100%;
-            height: auto;
-            object-fit: cover; /* Ensures the image covers the container without distortion */
-            border-radius: 10px;
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Item.ItemTitle</td>
+                <td>@order.Quantity</td>
+                <td>@order.Total</td>
+                <td>@order.Date</td>
+            </tr>
         }
-
-    .btn_box {
-        margin-top: 20px; /* Add spacing above the button box */
-    }
-
-    .card {
-        border: 1px solid #ddd; /* Optional border for the card */
-        border-radius: 10px; /* Rounded corners */
-    }
-
-    .card-title {
-        font-size: 1.5rem; /* Font size for Order ID */
-        font-weight: 600; /* Bold */
-    }
-
-    .card-subtitle {
-        font-size: 1.2rem; /* Font size for Item Title */
-        font-weight: 500; /* Medium weight */
-    }
-
-    .card-text {
-        font-size: 1rem; /* Normal text size */
-    }
-
-    .btn {
-        margin-right: 5px; /* Space between buttons */
-    }
-</style>
+    </tbody>
+</table>

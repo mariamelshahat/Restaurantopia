@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Restaurantopia.Entities.Models.Item>
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+@model IEnumerable<Restaurantopia.Entities.Models.Item>
+
 @foreach (var item in Model)
 {
     <div class="card mb-3 col-md-4">
