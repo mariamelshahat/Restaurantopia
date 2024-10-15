@@ -4,81 +4,92 @@
     ViewData["Title"] = "Edit";
     Layout = "_CreateNewPage";
 }
+
 <section class="book_section layout_padding">
     <div class="container">
         <div class="heading_container">
-            <h2>
-                Edit Item
-            </h2>
+            <h2>Edit Item</h2>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form_container">
                     <form asp-action="Edit" method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="form-floating mb-3">
-        <label class="styled-label" asp-for="ItemTitle"></label>
-        <input asp-for="ItemTitle" class="form-control" placeholder="Item Title" />
-        <span asp-validation-for="ItemTitle" class="text-danger"></span>
-    </div>
+                        <!-- Item Title -->
+                        <div class="form-floating mb-3">
+                            <label class="styled-label" asp-for="ItemTitle"></label>
+                            <input asp-for="ItemTitle" class="form-control" placeholder="Item Title" />
+                            <span asp-validation-for="ItemTitle" class="text-danger"></span>
+                        </div>
 
-    <div class="form-floating mb-3">
-        <label class="styled-label" asp-for="ItemDescription"></label>
-        <input asp-for="ItemDescription" class="form-control" placeholder="Item Description" />
-        <span asp-validation-for="ItemDescription" class="text-danger"></span>
-    </div>
+                        <!-- Item Description -->
+                        <div class="form-floating mb-3">
+                            <label class="styled-label" asp-for="ItemDescription"></label>
+                            <input asp-for="ItemDescription" class="form-control" placeholder="Item Description" />
+                            <span asp-validation-for="ItemDescription" class="text-danger"></span>
+                        </div>
 
-    <div class="form-floating mb-3">
-        <label class="styled-label" asp-for="ItemPrice"></label>
-        <input asp-for="ItemPrice" class="form-control" placeholder="Item Price" />
-        <span asp-validation-for="ItemPrice" class="text-danger"></span>
-    </div>
+                        <!-- Item Price -->
+                        <div class="form-floating mb-3">
+                            <label class="styled-label" asp-for="ItemPrice"></label>
+                            <input asp-for="ItemPrice" class="form-control" placeholder="Item Price" />
+                            <span asp-validation-for="ItemPrice" class="text-danger"></span>
+                        </div>
 
-    <div class="form-floating mb-3">
-        <label class="styled-label" asp-for="CategoryId"></label>
-        <select asp-for="CategoryId" class="form-control custom-dropdown nice-select wide">
-            <option value="-1" disabled selected>Select a category</option>
-            @foreach (var category in ViewBag.C_s)
-            {
-                <option value="@category.Id">@category.CategoryName</option>
-            }
-        </select>
-        <span asp-validation-for="CategoryId" class="text-danger"></span>
-    </div>
+                        <!-- Category Dropdown -->
+                        <!-- Category Dropdown -->
+@* <div class="form-floating mb-3">
+    <label class="styled-label" asp-for="CategoryId"></label>
+    <select asp-for="CategoryId" class="form-control">
+        <option value="-1" disabled>Select a category</option>
+        @foreach (var category in ViewBag.C_s)
+        {
+            <option value="@category.Id" @(category.Id == Model.CategoryId ? "selected" : "")>@category.CategoryName</option>
+        }
+    </select>
+    <span asp-validation-for="CategoryId" class="text-danger"></span>
+</div>
+ *@
+                        <div class="form-floating mb-3">
+                            <label class="styled-label" asp-for="CategoryId"></label>
+                            <select asp-for="CategoryId" asp-items="@(new SelectList(Model.categoryList, "Id", "CategoryName"))" class="form-control">
+                                <option value="-1" disabled selected>-- Select a category --</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
 
-    <div class="form-floating mb-3">
-        <label class="styled-label" asp-for="clientFile"></label>
-        <input type="file" asp-for="clientFile" class="form-control" onchange="loadFile(event)" />
-        <div class="image-container mt-2">
-            @if (!string.IsNullOrEmpty(Model.imageSrc))
-            {
-                <img id="output" src="@Model.imageSrc" alt="Current Image" />
-            }
-            else
-            {
-                <img id="output" src="\Images\no-image.webp" alt="No Image Available" />
-            }
-        </div>
-    </div>
+                        <!-- Image Upload with Preview -->
+                        <div class="form-floating mb-3">
+                            <label class="styled-label" asp-for="clientFile"></label>
+                            <input type="file" asp-for="clientFile" class="form-control" onchange="loadFile(event)" />
+                            <div class="image-container mt-2">
+                                @if (!string.IsNullOrEmpty(Model.imageSrc))
+                                {
+                                    <img id="output" src="@Url.Content(Model.imageSrc)" alt="Current Image" />
+                                }
+                                else
+                                {
+                                    <img id="output" src="/Images/no-image.webp" alt="No Image Available" />
+                                }
+                            </div>
+                        </div>
 
-    <div class="btn_box">
-        <button type="submit" class="btn btn-primary" >
-            Save
-        </button>
-        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Menu")'">
-            Back To Menu
-        </button>
-    </div>
-</form>
-
+                        <!-- Buttons -->
+                        <div class="btn_box">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Menu")'">
+                                Back To Menu
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 
+<!-- JavaScript for Image Preview -->
 <script>
     var loadFile = function(event) {
         var reader = new FileReader();
@@ -87,49 +98,56 @@
             output.src = reader.result;
         };
         reader.readAsDataURL(event.target.files[0]);
-    }
+    };
 </script>
 
+@* @section Scripts {
+    @await Html.RenderPartialAsync("_ValidationScriptsPartial")
+}
+ *@
 @section Scripts {
     @{
-        await Html.RenderPartialAsync ( "_ValidationScriptsPartial" );
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
 
     <script>
-                var loadFile = function(event) {
+        var loadFile = function (event) {
             var reader = new FileReader();
-            reader.onload = function() {
+            reader.onload = function () {
                 var myImg = document.getElementById('output');
                 myImg.src = reader.result;
-                    };
+            };
             reader.readAsDataURL(event.target.files[0]);
         }
     </script>
-}
+}}
 <style>
-      .image-container {
-    max-width: 300px;
-    max-height: 300px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-}
+    .image-container {
+        max-width: 300px;
+        max-height: 300px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-.image-container img {
-    width: 100%;
-    height: auto;
-    object-fit: cover; /* Ensures the image covers the container without distortion */
-    border-radius: 10px;
-}
-.styled-label {
-    font-size: 1.25rem; /* Increase font size */
-    font-weight: 600; /* Make text bold */
-    color: #333; /* Darker text color for better readability */
-    text-transform: uppercase; /* Make the label text uppercase */
-    letter-spacing: 0.05rem; /* Add some spacing between letters */
-    margin-bottom: 10px; /* Add space below the label */
-    display: inline-block; /* Ensures label behaves like a block element */
-}
+    .image-container img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+    }
 
+    .styled-label {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
 
+    .btn_box {
+        margin-top: 20px;
+    }
 </style>

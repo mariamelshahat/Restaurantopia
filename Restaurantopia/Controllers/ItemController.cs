@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Restaurantopia.Entities.Models;
 using Restaurantopia.InterFaces;
 using Restaurantopia.Repositories;
@@ -81,26 +82,42 @@ namespace Restaurantopia.Controllers
 
         public async Task<ActionResult> Edit ( int id )
         {
-            // Fetching categories for ViewBag for dropdown
-            ViewBag.C_s = await _Rep_Category.GetAllAsync ();
+            //// Fetching categories for ViewBag for dropdown
+            //ViewBag.C_s = await _Rep_Category.GetAllAsync ();
 
-            // Check if id is null
-            if (id == 0)  // id is an integer, so we check if it's 0 instead of null
-            {
-                return NotFound ();
-            }
+            //// Check if id is null
+            //if (id == 0)  // id is an integer, so we check if it's 0 instead of null
+            //{
+            //    return NotFound ();
+            //}
 
-            // Get the item by id
-            Item item = await _Rep_Item.GetByIdAsync ( id );
+            //// Get the item by id
+            //Item item = await _Rep_Item.GetByIdAsync ( id );
 
-            // If no item is found, return not found result
-            if (item == null)
-            {
-                return NotFound ();
-            }
+            //// If no item is found, return not found result
+            //if (item == null)
+            //{
+            //    return NotFound ();
+            //}
 
-            // Return the view with the item
-            return View ( item );
+            //// Return the view with the item
+            //return View ( item );
+            //var categories = await _Rep_Category.GetAllAsync();
+            //var items = await _Rep_Item.GetByIdAsync(id);
+            //items.categoryList = categories.ToList();
+            //return View(items);
+            
+            
+                var item = await _Rep_Item.GetByIdAsync(id);
+                if (item == null)
+                {
+                    return NotFound();
+                }
+               var categories = await _Rep_Category.GetAllAsync();
+            item.categoryList = categories.ToList();// Make sure to initialize this list
+                return View(item);
+            
+
         }
 
         [HttpPost]
@@ -117,16 +134,25 @@ namespace Restaurantopia.Controllers
             try
             {
                 // Handle file upload if provided
-                if (item.clientFile != null && item.clientFile.Length > 0)
+                //if (item.clientFile != null && item.clientFile.Length > 0)
+                //{
+                //    using (var stream = new MemoryStream ())
+                //    {
+                //        await item.clientFile.CopyToAsync ( stream );
+                //        // Save the image as needed, either in a database or file system
+                //        item.dbimage = stream.ToArray ();  // or store the file path
+                //    }
+                //}
+                if (item.clientFile != null)
                 {
-                    using (var stream = new MemoryStream ())
-                    {
-                        await item.clientFile.CopyToAsync ( stream );
-                        // Save the image as needed, either in a database or file system
-                        item.dbimage = stream.ToArray ();  // or store the file path
-                    }
+                    MemoryStream stream = new MemoryStream();
+                    item.clientFile.CopyTo(stream);
+                    item.dbimage = stream.ToArray();
                 }
-
+                else
+                {
+                    item.dbimage = item.dbimage;
+                }
                 // Update item in repository
                 await _Rep_Item.UpdateAsync ( item );
                 return RedirectToAction ( nameof ( Menu ) );

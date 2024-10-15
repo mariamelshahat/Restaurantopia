@@ -7,71 +7,115 @@
 
 <section class="book_section layout_padding">
     <div class="container">
-<div class="heading_container">
-    <h2>
-        Are you sure you want to Order this?
-    </h2>
-</div>
-
-<div>
-    <h4>Item</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemTitle)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ItemTitle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ItemDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemImage)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ItemImage)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemPrice)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ItemPrice)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CategoryId)
-        </dd>
-    </dl>
-
-    <form asp-action="Order" method="post">
-        @Html.HiddenFor(model => model.Id) <!-- Include the item ID -->
-        @Html.HiddenFor(model => model.ItemPrice) <!-- Include the item price -->
-        @Html.HiddenFor(model => model.ItemTitle) <!-- Include the item title -->
-        @Html.HiddenFor(model => model.ItemDescription) <!-- Include the item description -->
-        @Html.HiddenFor(model => model.ItemImage) <!-- Include the item image -->
-        @Html.HiddenFor(model => model.CategoryId) <!-- Include the category ID -->
-
-        <div class="form-group">
-            <label asp-for="Quantity" class="control-label"></label>
-            <input asp-for="Quantity" class="form-control" />
-            <span asp-validation-for="Quantity" class="text-danger"></span>
+        <div class="heading_container">
+            <h2>
+                Are you sure you want to Order this?
+            </h2>
         </div>
 
-        <input type="submit" value="Create Order" class="btn btn-primary" />
-        <a asp-action="Menu" class="btn btn-secondary">Back to List</a>
-    </form>
-</div>
-</div>
+        <div>
+            <h4>Item Details</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form_container">
+                        <form asp-action="Order" method="post">
+                            <!-- Item ID -->
+                            <div class="form-floating mb-3">
+                                <label class="form-label styled-label">@Html.DisplayNameFor(model => model.Id)</label>
+                                <input class="form-control" value="@Html.DisplayFor(model => model.Id)" readonly />
+                                @Html.HiddenFor(model => model.Id) <!-- Include the item ID -->
+                            </div>
+
+                            <!-- Item Title -->
+                            <div class="form-floating mb-3">
+                                <label class="form-label styled-label">@Html.DisplayNameFor(model => model.ItemTitle)</label>
+                                <input class="form-control" value="@Html.DisplayFor(model => model.ItemTitle)" readonly />
+                                @Html.HiddenFor(model => model.ItemTitle) <!-- Include the item title -->
+                            </div>
+
+                            <!-- Item Description -->
+                            <div class="form-floating mb-3">
+                                <label class="form-label styled-label">@Html.DisplayNameFor(model => model.ItemDescription)</label>
+                                <input class="form-control" value="@Html.DisplayFor(model => model.ItemDescription)" readonly />
+                                @Html.HiddenFor(model => model.ItemDescription) <!-- Include the item description -->
+                            </div>
+
+                            <!-- Item Price -->
+                            <div class="form-floating mb-3">
+                                <label class="form-label styled-label">@Html.DisplayNameFor(model => model.ItemPrice)</label>
+                                <input class="form-control" value="@Html.DisplayFor(model => model.ItemPrice)" readonly />
+                                @Html.HiddenFor(model => model.ItemPrice) <!-- Include the item price -->
+                            </div>
+
+                            <!-- Category -->
+                            <div class="form-floating mb-3">
+                                <label class="form-label styled-label">@Html.DisplayNameFor(model => model.CategoryId)</label>
+                                <input class="form-control" value="@Html.DisplayFor(model => model.CategoryId)" readonly />
+                                @Html.HiddenFor(model => model.CategoryId) <!-- Include the category ID -->
+                            </div>
+
+                            <!-- Item Image -->
+                            <div class="mb-3">
+                                <label class="form-label styled-label">@Html.DisplayNameFor(model => model.ItemImage)</label>
+                                <div class="image-container">
+                                    @if (string.IsNullOrEmpty(Model.imageSrc))
+                                    {
+                                        <img src="\Images\no-image.webp" alt="No Image Available" class="img-fluid img-thumbnail" />
+                                    }
+                                    else
+                                    {
+                                        <img src="@Model.imageSrc" alt="Item Image" class="img-fluid img-thumbnail" />
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Quantity Input -->
+                            <div class="form-group mb-3">
+                                <label asp-for="Quantity" class="control-label styled-label"></label>
+                                <input asp-for="Quantity" class="form-control" />
+                                <span asp-validation-for="Quantity" class="text-danger"></span>
+                            </div>
+
+                            <div class="btn_box">
+                                <input type="submit" value="Create Order" class="btn btn-primary" />
+                               @*  <a asp-action="Menu" class="btn btn-secondary">Back to List</a> *@
+                                <a href ="/OrderDetails/Index" class="btn btn-secondary">My Order</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+<style>
+    .image-container {
+        max-width: 300px;
+        max-height: 300px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+        object-fit: cover; /* Ensures the image covers the container without distortion */
+        border-radius: 10px;
+    }
+
+    .styled-label {
+        font-size: 1.25rem; /* Increase font size */
+        font-weight: 600; /* Make text bold */
+        color: #333; /* Darker text color for better readability */
+        text-transform: uppercase; /* Make the label text uppercase */
+        letter-spacing: 0.05rem; /* Add some spacing between letters */
+        margin-bottom: 10px; /* Add space below the label */
+        display: inline-block; /* Ensures label behaves like a block element */
+    }
+
+    .btn_box {
+        margin-top: 20px; /* Add some spacing above the button box */
+    }
+</style>

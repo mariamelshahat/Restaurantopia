@@ -20,6 +20,7 @@ namespace Restaurantopia.Entities.Models
         [ForeignKey("Item")]
         public int ItemId { get; set; }
         public Item Item { get; set; }
+       
 
     }
 }
