@@ -39,18 +39,18 @@
 
                         <!-- Category Dropdown -->
                         <!-- Category Dropdown -->
-@* <div class="form-floating mb-3">
-    <label class="styled-label" asp-for="CategoryId"></label>
-    <select asp-for="CategoryId" class="form-control">
-        <option value="-1" disabled>Select a category</option>
-        @foreach (var category in ViewBag.C_s)
-        {
-            <option value="@category.Id" @(category.Id == Model.CategoryId ? "selected" : "")>@category.CategoryName</option>
-        }
-    </select>
-    <span asp-validation-for="CategoryId" class="text-danger"></span>
-</div>
- *@
+                   @* <div class="form-floating mb-3">
+                       <label class="styled-label" asp-for="CategoryId"></label>
+                       <select asp-for="CategoryId" class="form-control">
+                           <option value="-1" disabled>Select a category</option>
+                           @foreach (var category in ViewBag.C_s)
+                           {
+                               <option value="@category.Id" @(category.Id == Model.CategoryId ? "selected" : "")>@category.CategoryName</option>
+                           }
+                       </select>
+                       <span asp-validation-for="CategoryId" class="text-danger"></span>
+                      </div>
+                   *@
                         <div class="form-floating mb-3">
                             <label class="styled-label" asp-for="CategoryId">Category</label>
                             <select asp-for="CategoryId" asp-items="@(new SelectList(Model.categoryList, "Id", "CategoryName"))" class="form-control">
