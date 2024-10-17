@@ -24,16 +24,43 @@ namespace Restaurantopia.Controllers
             _Rep_Order = rep_Order;
         }
 
-        public async Task<ActionResult> Menu ()
+        public async Task<ActionResult> Menu ( int? categoryId, string searchQuery )
         {
-            IEnumerable<Item> Items;
+            // Get all items initially
+            IEnumerable<Item> Items = await _Rep_Item.GetAllAsync ( includes: new[] { "Category" } );
 
-            Items = await _Rep_Item.GetAllAsync ( inculdes: new[] { "Category" } );
+            // Save selected category ID in ViewBag
+            ViewBag.SelectedCategoryId = categoryId;
+            ViewBag.SelectedCategoryName = null; // Initialize to null
 
-            //var Items = await _Rep_Item.GetAllAsync();
+            // Apply category filter if a categoryId is provided (i.e., not null or empty)
+            if (categoryId.HasValue && categoryId.Value != 0) // Adjust this line to check against a specific value for "All Categories"
+            {
+                Items = Items.Where ( item => item.CategoryId == categoryId.Value );
 
+                // Get the selected category name if filtering by a specific category
+                var selectedCategory = await _Rep_Category.GetByIdAsync ( categoryId.Value );
+                ViewBag.SelectedCategoryName = selectedCategory?.CategoryName; // Store the selected category name
+            }
+            else
+            {
+                // When "All Categories" is selected or no category is selected, we don't filter items
+                ViewBag.SelectedCategoryName = "All Categories"; // Optional: you can set a default value
+            }
+
+            // Apply search filter if a search query is provided
+            if (!string.IsNullOrWhiteSpace ( searchQuery ))
+            {
+                Items = Items.Where ( item => item.ItemTitle.ToLower ().Contains ( searchQuery.ToLower () ) );
+                ViewBag.SearchQuery = searchQuery;
+            }
+            else
+            {
+                ViewBag.SearchQuery = null;
+            }
+
+            ViewBag.C_s = await _Rep_Category.GetAllAsync ();
             return View ( Items );
-
         }
 
         public async Task<ActionResult> Details ( int id )
