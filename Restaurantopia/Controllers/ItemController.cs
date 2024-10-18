@@ -244,6 +244,8 @@ namespace Restaurantopia.Controllers
             {
                 return NotFound ();
             }
+
+            ViewBag.C_s = await _Rep_Category.GetAllAsync ();
             Item D_item = await _Rep_Item.GetByIdAsync ( id );
             if (D_item == null)
             {
