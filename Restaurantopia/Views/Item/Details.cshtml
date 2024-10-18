@@ -15,11 +15,6 @@
             <div class="col-md-6">
                 <div class="form_container">
 
-                   @*  <!-- Item ID -->
-                    <div class="form-floating mb-3">
-                        <label class="form-label styled-label">@Html.DisplayNameFor(model => model.Id)</label>
-                        <input class="form-control" value="@Html.DisplayFor(model => model.Id)" readonly />
-                    </div> *@
 
                     <!-- Item Title -->
                     <div class="form-floating mb-3">
@@ -58,14 +53,7 @@
                     <div class="mb-3">
                         <label class="form-label styled-label">Item Image</label>
                         <div class="image-container">
-                            @if (string.IsNullOrEmpty(Model.imageSrc))
-                            {
-                                <img src="~/Images/no-image.webp" alt="No Image Available" class="img-fluid img-thumbnail" />
-                            }
-                            else
-                            {
-                                <img src="@Model.imageSrc" alt="Item Image" class="img-fluid img-thumbnail" />
-                            }
+                            <img src="@Model.ItemImage" alt="Item Image" class="card-img" style="object-fit: cover; height: 100%;" onerror="this.onerror=null; this.src='~/wwwroot/Images/default-image.jpg';" />
                         </div>
                     </div>
 

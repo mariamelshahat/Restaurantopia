@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel;
 
 namespace Restaurantopia.Entities.Models
 {
@@ -14,11 +15,17 @@ namespace Restaurantopia.Entities.Models
         [Key]
         public int Id { get; set; }
         [StringLength ( 100 )]
+        [DisplayName ( "Item Name" )]
         public string ItemTitle { get; set; }
         [StringLength ( 120 )]
+        [DisplayName ( "Item Description" )]
         public string? ItemDescription { get; set; }
-        [StringLength ( 1000 )]
+        [StringLength ( 300 )]
+        [DisplayName ( "Item Image" )]
+
         public string? ItemImage { get; set; }
+        [DisplayName ( "Item Price" )]
+
         public decimal ItemPrice { get; set; }
         [Required]
         [NotMapped]
@@ -30,32 +37,7 @@ namespace Restaurantopia.Entities.Models
         public ICollection<OrderDetails>? OrderDetails { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
-
-        [NotMapped]
-
-        public IFormFile? clientFile { get; set; }
-
-        public byte[]? dbimage { get; set; }
-
-        [NotMapped]
-        public string? imageSrc
-        {
-            get
-            {
-                if (dbimage != null)
-                {
-                    string base64String = Convert.ToBase64String ( dbimage, 0, dbimage.Length );
-                    return "data:image/jpg;base64," + base64String;
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-        }
-
         [NotMapped]
         public List<Category>? categoryList { get; set; }
     }
-
 }

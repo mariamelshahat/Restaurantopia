@@ -36,6 +36,7 @@
                             <span asp-validation-for="ItemPrice" class="text-danger"></span>
                         </div>
 
+
                         <div class="form-floating mb-3">
                             <label class="styled-label" asp-for="CategoryId">Category Name</label>
                             <select asp-for="CategoryId" asp-items="@(new SelectList(Model.categoryList, "Id", "CategoryName"))" class="form-control">
@@ -43,22 +44,17 @@
                             </select>
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
-
                         <div class="form-floating mb-3">
-                            <label class="styled-label" asp-for="clientFile">Image</label>
-                            <input type="file" asp-for="clientFile" class="form-control" onchange="loadFile(event)" />
-                            <div class="image-container mt-2">
-                                @if (!string.IsNullOrEmpty(Model.imageSrc))
-                                {
-                                    <img id="output" src="@Model.imageSrc" alt="Current Image" />
-                                }
-                                else
-                                {
-                                    <img id="output" src="\Images\no-image.webp" alt="No Image Available" />
-                                }
-                            </div>
+                            <label asp-for="ImageFile" class="styled-label">Image</label>
+                            <input asp-for="ImageFile" class="form-control" type="file" onchange="loadFile(event)" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
                         </div>
 
+                        <div class="image-container mt-2">
+                            <img id="output" width="100%" />
+                        </div>
+
+                      
                         <div class="btn_box d-flex justify-content-between">
                             <button type="submit" class="btn btn-primary">Create</button>
                             <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Menu")'">
@@ -71,6 +67,7 @@
         </div>
     </div>
 </section>
+
 
 <style>
     .image-container {
@@ -104,18 +101,18 @@
 
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync ( "_ValidationScriptsPartial" );
     }
 
 
     <script>
-        var loadFile = function (event) {
+            var loadFile = function (event) {
             var reader = new FileReader();
             reader.onload = function () {
                 var myImg = document.getElementById('output');
                 myImg.src = reader.result;
-            };
+                } ;
             reader.readAsDataURL(event.target.files[0]);
         }
     </script>
-}}
+}

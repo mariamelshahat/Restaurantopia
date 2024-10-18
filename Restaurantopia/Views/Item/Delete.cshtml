@@ -64,17 +64,13 @@
                             </div>
 
                             <!-- Item Image -->
-                            <div class="mb-3">
+                            <div class="form-floating mb-3">
+                                <!-- Dynamically display the item image -->
                                 <label class="form-label styled-label">Item Image</label>
                                 <div class="image-container">
-                                    @if (string.IsNullOrEmpty(Model.imageSrc))
-                                    {
-                                        <img src="\Images\no-image.webp" alt="No Image Available" class="img-fluid img-thumbnail" />
-                                    }
-                                    else
-                                    {
-                                        <img src="@Model.imageSrc" alt="Item Image" class="img-fluid img-thumbnail" />
-                                    }
+                                       <img src="@Url.Content(Model.ItemImage ?? "~/images/default-placeholder.png")"
+                                           alt="Item Image"
+                                           onerror="this.onerror=null; this.src='~/Images/default-placeholder.png';" />
                                 </div>
                             </div>
 
