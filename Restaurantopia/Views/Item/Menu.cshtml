@@ -45,16 +45,17 @@
                         <div class="options">
                             <h6>$@item.ItemPrice</h6>
                         </div>
-                        @if (User.IsInRole(RolesNames.roleAdmin))
-                        {
+                        @* @if (User.IsInRole(RolesNames.roleAdmin))
+                        { *@
                             <div class="options">
                                 @Html.ActionLink("", "Edit", new { id = item.Id }, new { @class = "bi bi-pencil icon-white" }) |
                                 @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye icon-white" }) |
                                 @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "bi bi-trash icon-white" }) |
-                                @Html.ActionLink("", "Create", "OrderDetails", new { itemId = item.Id }, new{@class="fa fa-shopping-cart icon-white"})
+                                @Html.ActionLink("", "Order", new { id = item.Id }, new{@class="fa fa-shopping-cart icon-white"})
+                               
                             </div>
-                        }
-                        else if (User.IsInRole(RolesNames.roleCustomer))
+                        @* } *@
+                       @*  else if (User.IsInRole(RolesNames.roleCustomer))
                         {
                             <div class="options">
                                 @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye icon-white" }) |
@@ -66,7 +67,7 @@
                             <div class="options" style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                 @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye icon-white" })
                             </div>
-                        }
+                        } *@
                     </div>
                 </div>
             </div>

@@ -233,27 +233,74 @@ namespace Restaurantopia.Controllers
                 return View ( item );
             }
         }
+        //public async Task<ActionResult> Order ( int id )
+        //{
+        //    if (id == 0)
+        //    {
+        //        return NotFound ();
+        //    }
+        //    Item item = await _Rep_Item.GetByIdAsync ( id );
+        //    if (item == null)
+        //    {
+        //        return NotFound ();
+        //    }
+        //    return View ( item );
+        //}
+
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Order ( Item item )
+        //{
+        //    if (item.Quantity <= 0) 
+        //    {
+        //        ModelState.AddModelError ( "Quantity", "Quantity must be greater than zero." );
+        //        return View ( item );
+        //    }
+
+        //    try
+        //    {
+        //        //.
+        //        // Login 
+        //        int customerId = 1;
+
+        //        OrderDetails orderDetails = new OrderDetails
+        //        {
+        //            ItemId = item.Id, 
+        //            CustomerId = customerId,
+        //            Quantity = item.Quantity,
+        //            Total = (int)item.ItemPrice * item.Quantity, 
+        //            Date = DateTime.Now
+        //        };
+        //        await _Rep_Order.AddAsync ( orderDetails );
+
+
+        //        return RedirectToAction ( "Menu" );
+        //    }
+        //    catch
+        //    {
+        //        return View ( item );
+        //    }
+        //}
+        // GET: Place an order for an item
         public async Task<ActionResult> Order ( int id )
         {
-            if (id == 0)
-            {
-                return NotFound ();
-            }
-            Item item = await _Rep_Item.GetByIdAsync ( id );
+            var item = await _Rep_Item.GetByIdAsync ( id );
             if (item == null)
             {
                 return NotFound ();
             }
+
             return View ( item );
         }
 
-
-
+        // POST: Place an order
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Order ( Item item )
         {
-            if (item.Quantity <= 0) 
+            if (item.Quantity <= 0)
             {
                 ModelState.AddModelError ( "Quantity", "Quantity must be greater than zero." );
                 return View ( item );
@@ -261,29 +308,26 @@ namespace Restaurantopia.Controllers
 
             try
             {
-                //.
-                // Login 
-                int customerId = 1;
+                int customerId = 1; // Assuming a logged-in customer ID
 
                 OrderDetails orderDetails = new OrderDetails
                 {
-                    ItemId = item.Id, 
+                    ItemId = item.Id,
                     CustomerId = customerId,
                     Quantity = item.Quantity,
-                    Total = (int)item.ItemPrice * item.Quantity, 
+                    Total = (int)item.ItemPrice * item.Quantity,
                     Date = DateTime.Now
                 };
-                await _Rep_Order.AddAsync ( orderDetails );
 
-                
-                return RedirectToAction ( "Menu" );
+                await _Rep_Order.AddAsync ( orderDetails );
+                return RedirectToAction ( "Index", "OrderDetails" );
             }
-            catch
+            catch (Exception ex)
             {
+                ModelState.AddModelError ( string.Empty, ex.Message );
                 return View ( item );
             }
         }
-
 
     }
 }
