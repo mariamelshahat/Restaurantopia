@@ -106,93 +106,136 @@ namespace Restaurantopia.Controllers
 
             }
         }
-
+        // GET: Edit an item
         public async Task<ActionResult> Edit ( int id )
         {
-            //// Fetching categories for ViewBag for dropdown
-            //ViewBag.C_s = await _Rep_Category.GetAllAsync ();
-
-            //// Check if id is null
-            //if (id == 0)  // id is an integer, so we check if it's 0 instead of null
-            //{
-            //    return NotFound ();
-            //}
-
-            //// Get the item by id
-            //Item item = await _Rep_Item.GetByIdAsync ( id );
-
-            //// If no item is found, return not found result
-            //if (item == null)
-            //{
-            //    return NotFound ();
-            //}
-
-            //// Return the view with the item
-            //return View ( item );
-
-            //var categories = await _Rep_Category.GetAllAsync();
-            //var items = await _Rep_Item.GetByIdAsync(id);
-            //items.categoryList = categories.ToList();
-            //return View(items);
-       
-
-            var item = await _Rep_Item.GetByIdAsync(id);
-                if (item == null)
-                {
-                    return NotFound();
-                }
-
-               var categories = await _Rep_Category.GetAllAsync();
-            item.categoryList = categories.ToList();// Make sure to initialize this list
-                return View(item);
-            
-
+            ViewBag.C_s = await _Rep_Category.GetAllAsync ();
+            if (id == null)
+            {
+                return NotFound ();
+            }
+            Item item = await _Rep_Item.GetByIdAsync ( id );
+            if (item == null)
+            {
+                return NotFound ();
+            }
+            return View ( item );
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit ( Item item )
+        public async Task<ActionResult> Edit ( Item item )
         {
-            ViewBag.C_s = await _Rep_Category.GetAllAsync ();  // Re-populate category list in case of validation errors
-
-            if (!ModelState.IsValid)
-            {
-                return View ( item );
-            }
-
             try
             {
-                // Handle file upload if provided
-                //if (item.clientFile != null && item.clientFile.Length > 0)
-                //{
-                //    using (var stream = new MemoryStream ())
-                //    {
-                //        await item.clientFile.CopyToAsync ( stream );
-                //        // Save the image as needed, either in a database or file system
-                //        item.dbimage = stream.ToArray ();  // or store the file path
-                //    }
-                //}
-                if (item.clientFile != null)
+                if (item.ImageFile != null)
                 {
-                    MemoryStream stream = new MemoryStream();
-                    item.clientFile.CopyTo(stream);
-                    item.dbimage = stream.ToArray();
+                    // If a new image is uploaded, replace the old one
+                    string filePath = await _uploadFile.UploadFileAsync ( "\\Images\\ItemImage\\", item.ImageFile );
+                    item.ItemImage = filePath;
                 }
-                else
-                {
-                    item.dbimage = item.dbimage;
-                }
-                // Update item in repository
+
+                // If no new image is uploaded, the existing image path (item.ItemImage) remains the same
+
                 await _Rep_Item.UpdateAsync ( item );
+
                 return RedirectToAction ( nameof ( Menu ) );
             }
             catch (Exception ex)
             {
-                // Log the error (optional)
-                ModelState.AddModelError ( "", "Unable to save changes. Please try again." );
-                return View ( item );  // Return back to the view in case of an exception
+                ModelState.AddModelError ( string.Empty, ex.Message );
+                ViewBag.C_s = await _Rep_Category.GetAllAsync ();
+                return View ( item );
             }
         }
+
+
+
+        //public async Task<ActionResult> Edit ( int id )
+        //{
+        //    //// Fetching categories for ViewBag for dropdown
+        //    //ViewBag.C_s = await _Rep_Category.GetAllAsync ();
+
+        //    //// Check if id is null
+        //    //if (id == 0)  // id is an integer, so we check if it's 0 instead of null
+        //    //{
+        //    //    return NotFound ();
+        //    //}
+
+        //    //// Get the item by id
+        //    //Item item = await _Rep_Item.GetByIdAsync ( id );
+
+        //    //// If no item is found, return not found result
+        //    //if (item == null)
+        //    //{
+        //    //    return NotFound ();
+        //    //}
+
+        //    //// Return the view with the item
+        //    //return View ( item );
+
+        //    //var categories = await _Rep_Category.GetAllAsync();
+        //    //var items = await _Rep_Item.GetByIdAsync(id);
+        //    //items.categoryList = categories.ToList();
+        //    //return View(items);
+
+
+        //    var item = await _Rep_Item.GetByIdAsync(id);
+        //        if (item == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //       var categories = await _Rep_Category.GetAllAsync();
+        //    item.categoryList = categories.ToList();// Make sure to initialize this list
+        //        return View(item);
+
+
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit ( Item item )
+        //{
+        //    ViewBag.C_s = await _Rep_Category.GetAllAsync ();  // Re-populate category list in case of validation errors
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View ( item );
+        //    }
+
+        //    try
+        //    {
+        //        // Handle file upload if provided
+        //        //if (item.clientFile != null && item.clientFile.Length > 0)
+        //        //{
+        //        //    using (var stream = new MemoryStream ())
+        //        //    {
+        //        //        await item.clientFile.CopyToAsync ( stream );
+        //        //        // Save the image as needed, either in a database or file system
+        //        //        item.dbimage = stream.ToArray ();  // or store the file path
+        //        //    }
+        //        //}
+        //        if (item.clientFile != null)
+        //        {
+        //            MemoryStream stream = new MemoryStream();
+        //            item.clientFile.CopyTo(stream);
+        //            item.dbimage = stream.ToArray();
+        //        }
+        //        else
+        //        {
+        //            item.dbimage = item.dbimage;
+        //        }
+        //        // Update item in repository
+        //        await _Rep_Item.UpdateAsync ( item );
+        //        return RedirectToAction ( nameof ( Menu ) );
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the error (optional)
+        //        ModelState.AddModelError ( "", "Unable to save changes. Please try again." );
+        //        return View ( item );  // Return back to the view in case of an exception
+        //    }
+        //}
 
 
         public async Task<ActionResult> Delete ( int id )
@@ -318,7 +361,6 @@ namespace Restaurantopia.Controllers
                     Total = (int)item.ItemPrice * item.Quantity,
                     Date = DateTime.Now
                 };
-
                 await _Rep_Order.AddAsync ( orderDetails );
                 return RedirectToAction ( "Index", "OrderDetails" );
             }
