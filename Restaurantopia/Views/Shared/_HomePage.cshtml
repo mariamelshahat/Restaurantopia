@@ -70,10 +70,10 @@
                             </li>
 
                             <li class="nav-item">
-                                @if (User.IsInRole(RolesNames.roleAdmin))
-                                { 
+                              @*   @if (User.IsInRole(RolesNames.roleAdmin)) *@
+                                @* { *@ 
                                     <a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                                }
+                                @* } *@
                             </li>
                         </ul>
 

@@ -8,7 +8,7 @@ using Restaurantopia.Entities.Models;
 
 namespace Restaurantopia.Controllers
 {   
-    [Authorize(Roles =RolesNames.roleAdmin)]
+    //[Authorize(Roles =RolesNames.roleAdmin)]
     public class RolesController : Controller
     {
 

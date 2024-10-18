@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using Restaurantopia.Entities.Models;
 using Restaurantopia.InterFaces;
@@ -22,20 +23,21 @@ namespace Restaurantopia.Controllers
         public async Task<ActionResult> Index()
         {
             var orderDetailsList = await _orderrepository.GetAllAsync();
-            ViewBag.Orders = _Rep_Item.GetAllAsync();
+            ViewBag.Orders = await _Rep_Item.GetAllAsync();
             return View(orderDetailsList);
         }
 
         public async Task<ActionResult> Details(int id)
         {
             var orderDetailsList = await _orderrepository.GetByIdAsync(id);
-            ViewBag.Orders = _Rep_Item.GetAllAsync();
+            ViewBag.Orders = await _Rep_Item.GetAllAsync();
             return View(orderDetailsList);
         }
 
         public ActionResult Create()
         {
-            return View();
+          return View();
+            
         }
 
         [HttpPost]
@@ -64,6 +66,7 @@ namespace Restaurantopia.Controllers
             try
             {
                 return RedirectToAction(nameof(Index));
+             
             }
             catch
             {
@@ -78,7 +81,7 @@ namespace Restaurantopia.Controllers
                 return NotFound();
             }
             OrderDetails D_item = await _orderrepository.GetByIdAsync(id);
-            ViewBag.Orders = _Rep_Item.GetAllAsync();
+            ViewBag.Orders = await _Rep_Item.GetAllAsync();
             if (D_item == null)
             {
                 return NotFound();
