@@ -96,12 +96,12 @@
                                 </svg>
                             </a>
 
-                            @* @if (User.IsInRole ( RolesNames.roleAdmin ))
-                            { *@
+                            @if (User.IsInRole ( RolesNames.roleAdmin ))
+                            {
                                 <a href="/Item/Create" class="order_online">
                                     Create New
                                 </a>
-                            @* } *@
+                            }
 
                             <partial name="_LoginPartial" />
                         </div>

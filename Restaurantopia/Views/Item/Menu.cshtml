@@ -29,7 +29,7 @@
             <div class="col-sm-6 col-lg-4 all pizza">
                 <div class="box card-fixed">
                     <div class="img-box">
-                        <img src="@Url.Content(item.ItemImage ?? "/images/default-placeholder.png")" class="card-img-top" alt="@item.ItemTitle" style="height: 200px; object-fit: cover;">
+                        <img src="@Url.Content(item.ItemImage ?? "/images/default-placeholder.png")" class="card-img-top" alt="@item.ItemTitle" style="height: 200px; object-fit: cover;border-radius: 20px;">
                     </div>
 
                     <div class="detail-box">
@@ -38,12 +38,28 @@
                         <div class="options">
                             <h6>$@item.ItemPrice</h6>
                         </div>
+                        @if (User.IsInRole(RolesNames.roleAdmin)){
                         <div class="options">
                             @Html.ActionLink("", "Edit", new { id = item.Id }, new { @class = "bi bi-pencil icon-white" }) |
                             @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye icon-white" }) |
                             @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "bi bi-trash icon-white" }) |
-                            @Html.ActionLink("", "Order", new { id = item.Id }, new {@class="fa fa-shopping-cart icon-white"})
-                        </div>
+                            </div>
+                        }
+                        else if (User.IsInRole(RolesNames.roleCustomer))
+                        {
+                            <div class="options">
+                                @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye icon-white" }) |
+                                @Html.ActionLink("", "Order", new { id = item.Id }, new { @class = "fa fa-shopping-cart icon-white" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="options">
+                                @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye icon-white" }) |
+                                
+                            </div>
+                        }
+                        
                     </div>
                 </div>
             </div>

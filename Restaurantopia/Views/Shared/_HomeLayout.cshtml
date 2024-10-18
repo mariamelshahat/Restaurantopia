@@ -71,10 +71,10 @@
                             <li class="nav-item active">
                                 <a class="nav-link" href="/Review/Add">Review <span class="sr-only">(current)</span> </a>
                             </li>
-                           @*  @if (User.IsInRole(RolesNames.roleAdmin))
-                            { *@
+                            @if (User.IsInRole(RolesNames.roleAdmin))
+                            {
                                 <a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                            @* } *@
+                            }
                            
                         </ul>
                         <div class="user_option">
