@@ -19,27 +19,44 @@ namespace Restaurantopia.Controllers
             _orderrepository = orderrepository;
             _Rep_Item = rep_Item;
         }
-
+        /// <summary>
+        /// GET: OrderDetailsController/Index
+        /// Purpose: Displays a list of all order details.
+        /// </summary>
+        /// <returns> A view with a list of order details and items.</returns>
         public async Task<ActionResult> Index ()
         {
             var orderDetailsList = await _orderrepository.GetAllAsync ();
             ViewBag.Orders = await _Rep_Item.GetAllAsync ();  // Properly await the second async call
             return View ( orderDetailsList );
         }
-
+        /// <summary>
+        ///  GET: OrderDetailsController/Details/{id}
+        /// Purpose: Displays the details of a specific order based on the provided ID.
+        /// </summary>
+        /// <param name="id">The ID of the order details to display.</param>
+        /// <returns>A view showing the order details for the specified ID.</returns>
         public async Task<ActionResult> Details ( int id )
         {
             var orderDetailsList = await _orderrepository.GetByIdAsync ( id );
             ViewBag.Orders = await _Rep_Item.GetAllAsync ();  // Properly await the second async call
             return View ( orderDetailsList );
         }
-
-        // GET: OrderDetailsController/Create
+        /// <summary>
+        /// GET: OrderDetailsController/Create
+        /// Purpose: Displays the form for creating new order details.
+        /// </summary>
+        /// <returns>A view for creating new order details.</returns>
         public ActionResult Create ()
         {
             return View ();
         }
-
+        /// <summary>
+        /// POST: OrderDetailsController/Create
+        /// Purpose: Handles the creation of new order details.
+        /// </summary>
+        /// <param name="item">The order details to be created.</param>
+        /// <returns>Redirects to the Index view on success, or redisplays the form on failure.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create ( OrderDetails item )
@@ -54,8 +71,12 @@ namespace Restaurantopia.Controllers
                 return View ();
             }
         }
-        // GET: OrderDetailsController/Edit/5
-        // GET: OrderDetailsController/Edit/5
+        /// <summary>
+        /// GET: OrderDetailsController/Edit/{id}
+        /// Purpose: Displays the form for editing existing order details based on the provided ID.
+        /// </summary>
+        /// <param name="id">The ID of the order details to edit.</param>
+        /// <returns>A view for editing the order details.</returns>
         public async Task<ActionResult> Edit ( int id )
         {
             var orderDetails = await _orderrepository.GetByIdAsync ( id );
@@ -67,7 +88,13 @@ namespace Restaurantopia.Controllers
             return View ( orderDetails );
         }
 
-        // POST: OrderDetailsController/Edit/5
+        /// <summary>
+        /// POST: OrderDetailsController/Edit/{id}
+        /// Purpose: Handles the update of existing order details.
+        /// </summary>
+        /// <param name="id">The ID of the order to update.</param>
+        /// <param name="updatedOrderDetails">The updated order details.</param>
+        /// <returns>Redirects to the Index view on success, or redisplays the form with errors on failure.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit ( int id, OrderDetails updatedOrderDetails )
@@ -106,7 +133,12 @@ namespace Restaurantopia.Controllers
 
 
 
-        // GET: OrderDetailsController/Delete/5
+        /// <summary>
+        ///  GET: OrderDetailsController/Delete/{id}
+        /// Purpose: Displays the confirmation view for deleting specific order details based on the provided ID.
+        /// </summary>
+        /// <param name="id">The ID of the order to delete.</param>
+        /// <returns>A view to confirm the deletion of the order details.</returns>
         public async Task<ActionResult> Delete ( int id )
         {
             if (id == 0)
@@ -122,7 +154,13 @@ namespace Restaurantopia.Controllers
             }
             return View ( D_item );
         }
-
+        /// <summary>
+        /// POST: OrderDetailsController/Delete/{id}
+        /// Purpose: Handles the deletion of order details after confirmation.
+        /// </summary>
+        /// <param name="id">The ID of the order to delete.</param>
+        /// <param name="order">The order details to confirm deletion.</param>
+        /// <returns>Redirects to the Index view on success, or redisplays the view on failure.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete ( int id, OrderDetails order )
@@ -142,6 +180,12 @@ namespace Restaurantopia.Controllers
                 return View ( order );
             }
         }
+        /// <summary>
+        /// POST: OrderDetailsController/Add/{id}
+        /// Purpose: Handles the addition of an order based on the provided ID.
+        /// </summary>
+        /// <param name="Id">The ID of the order to add.</param>
+        /// <returns>Redirects to the Index view after adding the order.</returns>
         [HttpPost]
         public async Task<IActionResult> Add ( int Id )
         {

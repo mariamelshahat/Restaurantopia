@@ -8,7 +8,7 @@ namespace Restaurantopia.Controllers
     public class CategoryController : Controller
     {
         private IGenericRepository<Category> _repository;
-
+        
         public CategoryController(IGenericRepository<Category> repository)
         {
             _repository = repository;

@@ -6,7 +6,8 @@ using Restaurantopia.Repositories;
 
 namespace Restaurantopia.Controllers
 {
-    // Controller for managing Items (Loay Elsayed)
+   
+   
     public class ItemController : Controller
     {
         private readonly IGenericRepository<Item> _Rep_Item;
@@ -24,8 +25,14 @@ namespace Restaurantopia.Controllers
             _uploadFile = uploadFile;
             _Rep_Order = rep_Order;
         }
+        /// <summary>
+        ///  GET: Menu (Displays items with optional category and search filters)
+        ///   Purpose: Displays a list of items, optionally filtered by category or search query.
+        /// </summary>
+        /// <param name="categoryId">Filter by category ID.</param>
+        /// <param name="searchQuery">Filter by item name or description.</param>
+        /// <returns> A view displaying the filtered items and associated categories.</returns>
 
-        // GET: Menu (Displays items with optional category and search filters)
         public async Task<ActionResult> Menu ( int? categoryId, string searchQuery )
         {
             IEnumerable<Item> Items = await _Rep_Item.GetAllAsync ( includes: new[] { "Category" } );
@@ -54,7 +61,12 @@ namespace Restaurantopia.Controllers
             return View ( Items );
         }
 
-        // GET: Details of an item
+        /// <summary>
+        /// GET: Details of an item
+        /// Purpose: Displays details of a specific item based on the provided id.
+        /// </summary>
+        /// <param name="id">The ID of the item to display.</param>
+        /// <returns>A view showing the details of the specified item.</returns>
         public async Task<ActionResult> Details ( int id )
         {
             Item item = await _Rep_Item.GetByIdAsync ( id );
@@ -67,7 +79,11 @@ namespace Restaurantopia.Controllers
             return View ( item );
         }
 
-        // GET: Create a new item
+        /// <summary>
+        /// GET: Create a new item
+        /// Purpose: Displays the form to create a new item.
+        /// </summary>
+        /// <returns>A view for creating a new item, with a list of available categories.</returns>
         public async Task<ActionResult> Create ()
         {
             var categories = await _Rep_Category.GetAllAsync ();
@@ -75,7 +91,12 @@ namespace Restaurantopia.Controllers
             return View ( item );
         }
 
-        // POST: Create a new item
+        /// <summary>
+        /// POST: Create a new item
+        /// Purpose: Handles the creation of a new item and saves it to the database.
+        /// </summary>
+        /// <param name="item">The item object to be created, including optional image upload.</param>
+        /// <returns>Redirects to the Menu view on success or redisplays the form with errors on failure.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create ( Item item )
@@ -98,7 +119,12 @@ namespace Restaurantopia.Controllers
             }
         }
 
-        // GET: Edit an item
+        /// <summary>
+        /// GET: Edit an item
+        /// Purpose: Displays the form to edit an existing item based on the provided id.
+        /// </summary>
+        /// <param name="id">The ID of the item to be edited.</param>
+        /// <returns>A view for editing the item, with the current data pre-filled.</returns>
         public async Task<ActionResult> Edit ( int id )
         {
             ViewBag.C_s = await _Rep_Category.GetAllAsync ();
@@ -113,6 +139,12 @@ namespace Restaurantopia.Controllers
             }
             return View ( item );
         }
+        /// <summary>
+        /// POST: Edit an item
+        /// Purpose: Handles the update of an existing item and saves the changes to the database.
+        /// </summary>
+        /// <param name="item">The updated item object, including optional new image upload.</param>
+        /// <returns>Redirects to the Menu view on success or redisplays the form with errors on failure.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit ( Item item )
@@ -141,7 +173,12 @@ namespace Restaurantopia.Controllers
         }
 
 
-        // GET: Delete confirmation view for an item
+        /// <summary>
+        /// GET: Delete confirmation view for an item
+        /// Purpose: Displays a confirmation view to delete an item.
+        /// </summary>
+        /// <param name="id">The ID of the item to be deleted.</param>
+        /// <returns>A view showing the item details before confirming the deletion.</returns>
         public async Task<ActionResult> Delete ( int id )
         {
             var item = await _Rep_Item.GetByIdAsync ( id );
@@ -154,7 +191,12 @@ namespace Restaurantopia.Controllers
             return View ( item );
         }
 
-        // POST: Delete an item
+        /// <summary>
+        /// POST: Delete an item
+        /// Purpose: Handles the deletion of an item from the database after confirmation.
+        /// </summary>
+        /// <param name="id">The ID of the item to be deleted.</param>
+        /// <returns>Redirects to the Menu view on success or redisplays the form with errors on failure.</returns>
         [HttpPost, ActionName ( "Delete" )]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed ( int id )
@@ -178,7 +220,12 @@ namespace Restaurantopia.Controllers
             }
         }
 
-        // GET: Place an order for an item
+        /// <summary>
+        /// GET: Place an order for an item
+        /// Purpose: Displays the form to place an order for a specific item.
+        /// </summary>
+        /// <param name="id">The ID of the item to be ordered.</param>
+        /// <returns>A view showing the order form for the specified item.</returns>
         public async Task<ActionResult> Order ( int id )
         {
             var item = await _Rep_Item.GetByIdAsync ( id );
@@ -190,7 +237,12 @@ namespace Restaurantopia.Controllers
             return View ( item );
         }
 
-        // POST: Place an order
+        /// <summary>
+        /// POST: Place an order
+        /// Purpose: Handles the creation of an order for a specific item.
+        /// </summary>
+        /// <param name="item">The item being ordered, including the quantity.</param>
+        /// <returns>Redirects to the OrderDetails view on success or redisplays the form with errors on failure.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Order ( Item item )
