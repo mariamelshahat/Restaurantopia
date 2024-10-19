@@ -146,7 +146,7 @@ namespace Restaurantopia.Controllers
             {
                 return NotFound ();
             }
-            ViewBag.Orders = await _Rep_Item.GetAllAsync ();
+            await _Rep_Item.GetAllAsync ();
 
             OrderDetails D_item = await _orderrepository.GetByIdAsync ( id );
             if (D_item == null)
