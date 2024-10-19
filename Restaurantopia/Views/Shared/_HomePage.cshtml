@@ -63,9 +63,12 @@
                                
                                 <a class="nav-link" href="/Home/Index">Home <span class="sr-only">(current)</span></a>
                             </li>
+                            
                             <li class="nav-item">
+                             
                                 <a class="nav-link" href="/Item/Menu">Menu</a>
                             </li>
+                            
                             <li class="nav-item">
                                 @if (User.IsInRole(RolesNames.roleAdmin))
                                 {
@@ -119,9 +122,13 @@
                                         <p>
                                             Discover the authentic taste of Egypt from the comfort of your home with our online restaurant. We offer a delicious selection of traditional dishes, including koshari, falafel, and freshly baked pita, all prepared with the finest ingredients.
                                         </p>
+                                   
                                         <div class="btn-box">
+                                            @if (User.IsInRole(RolesNames.roleCustomer)){
                                             <a href="/Item/Menu" class="btn1">Order Now</a>
+                                            }
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
