@@ -181,23 +181,23 @@ namespace Restaurantopia.Controllers
                 return View ( order );
             }
         }
-        /// <summary>
-        /// POST: OrderDetailsController/Add/{id}
-        /// Purpose: Handles the addition of an order based on the provided ID.
-        /// </summary>
-        /// <param name="Id">The ID of the order to add.</param>
-        /// <returns>Redirects to the Index view after adding the order.</returns>
-        [HttpPost]
-        public async Task<IActionResult> Add ( int Id )
-        {
-            var i = await _orderrepository.GetByIdAsync ( Id );
-            if (i == null)
-            {
-                return NotFound ();
-            }
-            await _orderrepository.UpdateAsync ( i );
-            return RedirectToAction ( "Index" );
-        }
+        ///// <summary>
+        ///// POST: OrderDetailsController/Add/{id}
+        ///// Purpose: Handles the addition of an order based on the provided ID.
+        ///// </summary>
+        ///// <param name="Id">The ID of the order to add.</param>
+        ///// <returns>Redirects to the Index view after adding the order.</returns>
+        //[HttpPost]
+        //public async Task<IActionResult> Add ( int Id )
+        //{
+        //    var i = await _orderrepository.GetByIdAsync ( Id );
+        //    if (i == null)
+        //    {
+        //        return NotFound ();
+        //    }
+        //    await _orderrepository.UpdateAsync ( i );
+        //    return RedirectToAction ( "Index" );
+        //}
 
 
 
