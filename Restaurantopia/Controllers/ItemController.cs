@@ -37,19 +37,19 @@ namespace Restaurantopia.Controllers
         {
             IEnumerable<Item> Items = await _Rep_Item.GetAllAsync ( includes: new[] { "Category" } );
 
-            ViewBag.SelectedCategoryId = categoryId;
-            ViewBag.SelectedCategoryName = null;
+            //ViewBag.SelectedCategoryId = categoryId;
+            //ViewBag.SelectedCategoryName = null;
 
-            if (categoryId.HasValue && categoryId.Value != 0)
-            {
-                Items = Items.Where ( item => item.CategoryId == categoryId.Value );
-                var selectedCategory = await _Rep_Category.GetByIdAsync ( categoryId.Value );
-                ViewBag.SelectedCategoryName = selectedCategory?.CategoryName;
-            }
-            else
-            {
-                ViewBag.SelectedCategoryName = "All Categories";
-            }
+            //if (categoryId.HasValue && categoryId.Value != 0)
+            //{
+            //    Items = Items.Where(item => item.CategoryId == categoryId.Value);
+            //    var selectedCategory = await _Rep_Category.GetByIdAsync(categoryId.Value);
+            //    ViewBag.SelectedCategoryName = selectedCategory?.CategoryName;
+            //}
+            //else
+            //{
+            //    ViewBag.SelectedCategoryName = "All Categories";
+            //}
 
             if (!string.IsNullOrWhiteSpace ( searchQuery ))
             {
@@ -57,7 +57,7 @@ namespace Restaurantopia.Controllers
                 ViewBag.SearchQuery = searchQuery;
             }
 
-            ViewBag.C_s = await _Rep_Category.GetAllAsync ();
+            //ViewBag.C_s = await _Rep_Category.GetAllAsync ();
             return View ( Items );
         }
 
@@ -187,7 +187,7 @@ namespace Restaurantopia.Controllers
                 return NotFound ();
             }
 
-            ViewBag.C_s = await _Rep_Category.GetAllAsync ();
+            ViewBag.C_s = await _Rep_Category.GetAllAsync();
             return View ( item );
         }
 

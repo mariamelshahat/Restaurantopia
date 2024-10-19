@@ -79,7 +79,9 @@
                                 <a class="nav-link" href="/About/Index">About</a>
                             </li>
                             <li class="nav-item">
+                                 @if (User.IsInRole(RolesNames.roleCustomer)){
                                 <a class="nav-link" href="/Review/Add">Review</a>
+                                 }
                             </li>
                             <li class="nav-item">
                                 @if (User.IsInRole(RolesNames.roleAdmin))
