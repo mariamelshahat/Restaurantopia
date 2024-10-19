@@ -42,7 +42,7 @@
                         <div class="options">
                             @Html.ActionLink("", "Edit", new { id = item.Id }, new { @class = "bi bi-pencil icon-white" }) |
                             @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "bi bi-eye icon-white" }) |
-                            @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "bi bi-trash icon-white" }) |
+                            @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "bi bi-trash icon-white" }) 
                             </div>
                         }
                         else if (User.IsInRole(RolesNames.roleCustomer))

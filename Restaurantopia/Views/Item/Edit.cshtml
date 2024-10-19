@@ -42,8 +42,8 @@
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
-            
-            <div class="form-group">
+
+                        <div class="form-floating mb-3">
                         <label asp-for="ImageFile" class="control-label">Image</label>
                         <input asp-for="ImageFile" class="form-control" type="file" onchange="loadFile(event)" />
                         <span asp-validation-for="ImageFile" class="text-danger"></span>
