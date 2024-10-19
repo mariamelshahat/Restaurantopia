@@ -21,12 +21,20 @@ namespace Restaurantopia.Controllers
             this.roles = roles;
 
         }
+        /// <summary>
+        /// Purpose: Displays a list of all users in the system.
+        /// </summary>
+        /// <returns>A view showing a list of users.</returns>
         public async Task<IActionResult> Index()
         {
             var _users = await user.Users.ToListAsync();
             return View(_users);
         }
-
+        /// <summary>
+        /// Purpose: Retrieves a specific user by ID and their current roles, and displays a list of all available roles to assign or unassign.
+        /// </summary>
+        /// <param name="userId"> The ID of the user whose roles are being managed.</param>
+        /// <returns>A view showing the user's roles and all available roles for selection.</returns>
         public async Task<IActionResult> addRoles(string userId)
         {
             var _user = await user.FindByIdAsync(userId);
@@ -51,7 +59,12 @@ namespace Restaurantopia.Controllers
                 return NotFound();
 
         }
-
+        /// <summary>
+        /// Purpose: Handles assigning or removing roles for a specific user based on the selected roles from the form.
+        /// </summary>
+        /// <param name="userId"> The ID of the user being updated.</param>
+        /// <param name="jsonRoles"> A JSON string representing the list of roles to assign or unassign.</param>
+        /// <returns>Redirects to the Index view after successfully updating the roles, or returns a 404 error if the user is not found.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> addRoles(string userId, string jsonRoles)
