@@ -27,21 +27,22 @@ namespace Restaurantopia.Controllers
         public async Task<ActionResult> Index ()
         {
             var orderDetailsList = await _orderrepository.GetAllAsync ();
-            ViewBag.Orders = await _Rep_Item.GetAllAsync ();  // Properly await the second async call
+            await _Rep_Item.GetAllAsync ();  // Properly await the second async call
             return View ( orderDetailsList );
         }
-        /// <summary>
-        ///  GET: OrderDetailsController/Details/{id}
-        /// Purpose: Displays the details of a specific order based on the provided ID.
-        /// </summary>
-        /// <param name="id">The ID of the order details to display.</param>
-        /// <returns>A view showing the order details for the specified ID.</returns>
-        public async Task<ActionResult> Details ( int id )
-        {
-            var orderDetailsList = await _orderrepository.GetByIdAsync ( id );
-            ViewBag.Orders = await _Rep_Item.GetAllAsync ();  // Properly await the second async call
-            return View ( orderDetailsList );
-        }
+        ///// <summary>
+        /////  GET: OrderDetailsController/Details/{id}
+        ///// Purpose: Displays the details of a specific order based on the provided ID.
+        ///// </summary>
+        ///// <param name="id">The ID of the order details to display.</param>
+        ///// <returns>A view showing the order details for the specified ID.</returns>
+        //public async Task<ActionResult> Details ( int id )
+        //{
+        //    var orderDetailsList = await _orderrepository.GetByIdAsync ( id );
+        //    ViewBag.Orders = await _Rep_Item.GetAllAsync ();  // Properly await the second async call
+        //    return View ( orderDetailsList );
+        //}
+
         /// <summary>
         /// GET: OrderDetailsController/Create
         /// Purpose: Displays the form for creating new order details.
@@ -80,7 +81,7 @@ namespace Restaurantopia.Controllers
         public async Task<ActionResult> Edit ( int id )
         {
             var orderDetails = await _orderrepository.GetByIdAsync ( id );
-            ViewBag.Orders = await _Rep_Item.GetAllAsync ();
+            await _Rep_Item.GetAllAsync ();
             if (orderDetails == null)
             {
                 return NotFound ();
