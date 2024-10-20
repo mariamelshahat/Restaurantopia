@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurantopia.Models;
 
@@ -11,9 +12,11 @@ using Restaurantopia.Models;
 namespace Restaurantopia.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241020141110_data1")]
+    partial class data1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,15 +54,15 @@ namespace Restaurantopia.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6e7ee39e-0b3e-4194-a250-2a7f99ba2791",
-                            ConcurrencyStamp = "a4cc0557-8086-4dc7-960f-0ad8dd47f1b3",
+                            Id = "93fddd41-5531-40d1-a4ce-2a96cfd07827",
+                            ConcurrencyStamp = "6b42f127-f931-4b8d-832b-7a219aa32dbf",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "108d1667-c888-4165-a24f-78669f23be57",
-                            ConcurrencyStamp = "29ec1600-a1db-4bff-a214-0a6d25bb9988",
+                            Id = "0c8dd1e0-ccac-4cb2-bdb1-1ef887d09c3a",
+                            ConcurrencyStamp = "6615a9c1-b7db-43c1-8d11-0ceb41cd449a",
                             Name = "Customer",
                             NormalizedName = "customer"
                         });
@@ -378,7 +381,7 @@ namespace Restaurantopia.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -480,7 +483,9 @@ namespace Restaurantopia.Migrations
                 {
                     b.HasOne("Restaurantopia.Entities.Models.Customer", "customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("customer");
                 });

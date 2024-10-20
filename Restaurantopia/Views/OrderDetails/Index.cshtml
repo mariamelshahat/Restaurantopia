@@ -1,5 +1,4 @@
-﻿
- @model IEnumerable<Restaurantopia.Entities.Models.OrderDetails>
+﻿@model IEnumerable<Restaurantopia.Entities.Models.OrderDetails>
 
 @{
     ViewData["Title"] = "Order Index";
@@ -11,7 +10,6 @@
         <h2 class="mb-4">My Cart</h2>
     </div>
 </div>
-
 <div class="container">
     <div class="row">
         @foreach (var order in Model)
@@ -31,6 +29,9 @@
                         <p class="card-text">
                             Date of Order: @Html.DisplayFor( modelItem => order.Date ) <!-- Display Order Date -->
                         </p>
+                        <p class="card-text">
+                            Phone Number: @Html.DisplayFor( modelItem => order.PhoneNumber ) <!-- Display Phone Number -->
+                        </p> <!-- New line to display Phone Number -->
                         <div class="text-center">
                             <a href="@Url.Action("Details", "OrderDetails", new { id = order.Id })">
                                 <!-- Dynamically display the order item's image -->
@@ -60,7 +61,6 @@
         } <!-- Ensures alignment for grid system -->
     </div>
 </div>
-
 <style>
     /* Optional custom styles for buttons */
     .btn-warning {
