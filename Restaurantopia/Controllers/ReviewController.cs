@@ -30,7 +30,7 @@ namespace Restaurantopia.Controllers
         public async Task<IActionResult> Add ( Review review )
         {
             var i = await _reviewrepository.AddAsync ( review );
-            return RedirectToAction ( "Add" );
-        }
+			return RedirectToAction ( "Index", "Home" );
+		}
     }
 }
